@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="com.huanghehua.www.domain.gateway.UserDAO">
+    <insert id="insertUser">
+        insert into user
+        (email, password, status)
+        values
+        (#{email}, #{password}, #{status});
+    </insert>
+
+
+    <select id="selectSingleUserByEmail" resultType="com.huanghehua.www.infrastructure.data.UserPO">
+        select * from user
+        where email = #{email} and password = #{password};
+    </select>
+</mapper>
