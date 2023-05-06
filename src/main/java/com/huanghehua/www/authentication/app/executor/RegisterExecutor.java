@@ -1,7 +1,8 @@
 package com.huanghehua.www.authentication.app.executor;
 
-import com.huanghehua.www.authentication.api.Register;
-import com.huanghehua.www.authentication.dto.UserDTO;
+
+import com.huanghehua.www.authentication.client.api.Register;
+import com.huanghehua.www.authentication.client.dto.UserDTO;
 import com.huanghehua.www.common.CommonResult;
 
 /**

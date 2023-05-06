@@ -1,7 +1,6 @@
 package com.huanghehua.www.authentication.client.api;
 
-import com.huanghehua.www.authentication.dto.SignatureDTO;
-import com.huanghehua.www.authentication.dto.UserDTO;
+import com.huanghehua.www.authentication.client.dto.UserDTO;
 import com.huanghehua.www.common.CommonResult;
 
 /**

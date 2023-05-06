@@ -1,7 +1,7 @@
 package com.huanghehua.www.authentication.app.bootstrap;
 
 
-import com.huanghehua.rpc.proxy.Skeleton;
+import com.huanghehua.www.rpc.proxy.Skeleton;
 
 /**
  * 主要

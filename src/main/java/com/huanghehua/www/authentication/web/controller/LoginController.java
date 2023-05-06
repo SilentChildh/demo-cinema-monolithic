@@ -1,12 +1,13 @@
 package com.huanghehua.www.authentication.web.controller;
 
-import com.huanghehua.rpc.proxy.Stub;
-import com.huanghehua.www.authentication.api.Login;
-import com.huanghehua.www.authentication.executor.LoginExecutor;
+
+import com.huanghehua.www.authentication.app.executor.LoginExecutor;
+import com.huanghehua.www.authentication.client.api.Login;
 import com.huanghehua.www.authentication.web.data.UserVO;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
 import com.huanghehua.www.ioc.annotation.Bean;
+import com.huanghehua.www.rpc.proxy.Stub;
 
 
 /**

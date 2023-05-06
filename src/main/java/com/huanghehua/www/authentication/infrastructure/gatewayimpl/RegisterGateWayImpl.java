@@ -1,7 +1,7 @@
 package com.huanghehua.www.authentication.infrastructure.gatewayimpl;
 
-import com.huanghehua.www.authentication.mapper.UserMapper;
-import com.huanghehua.www.authentication.user.gateway.RegisterGateWay;
+import com.huanghehua.www.authentication.domain.gateway.RegisterGateWay;
+import com.huanghehua.www.authentication.infrastructure.mapper.UserMapper;
 import com.huanghehua.www.ioc.annotation.Reference;
 
 /**
