@@ -1,6 +1,6 @@
 package com.huanghehua.www.dispatch.util;
 
-import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson.JSON;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedReader;
