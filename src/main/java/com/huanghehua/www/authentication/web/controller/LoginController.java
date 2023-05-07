@@ -7,7 +7,7 @@ import com.huanghehua.www.authentication.web.data.UserVO;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
 import com.huanghehua.www.ioc.annotation.Bean;
-import com.huanghehua.www.rpc.proxy.Stub;
+import com.huanghehua.www.ioc.annotation.Reference;
 
 
 /**
@@ -19,7 +19,8 @@ import com.huanghehua.www.rpc.proxy.Stub;
 @Bean
 @Request("/authentication")
 public class LoginController {
-    private final Login loginExecutor = Stub.getStub(Login.class, LoginExecutor.class);
+    @Reference(LoginExecutor.class)
+    private Login loginExecutor;
 
     /**
      * 获取请求中携带的用户信息，进行登录操作，成功则返回带有JWT的信息，否则返回错误提示信息。
