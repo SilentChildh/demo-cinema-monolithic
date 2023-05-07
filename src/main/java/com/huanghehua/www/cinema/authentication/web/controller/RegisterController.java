@@ -1,8 +1,8 @@
-package com.huanghehua.www.authentication.web.controller;
+package com.huanghehua.www.cinema.authentication.web.controller;
 
-import com.huanghehua.www.authentication.app.executor.RegisterExecutor;
-import com.huanghehua.www.authentication.client.api.Register;
-import com.huanghehua.www.authentication.web.data.UserVO;
+import com.huanghehua.www.cinema.authentication.client.api.Register;
+import com.huanghehua.www.cinema.authentication.web.data.UserVO;
+import com.huanghehua.www.cinema.authentication.app.executor.RegisterExecutor;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
 import com.huanghehua.www.ioc.annotation.Bean;

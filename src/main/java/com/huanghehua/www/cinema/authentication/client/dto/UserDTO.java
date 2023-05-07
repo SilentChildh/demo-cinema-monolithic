@@ -1,17 +1,15 @@
-package com.huanghehua.www.authentication.web.data;
+package com.huanghehua.www.cinema.authentication.client.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * 用户信息数据值信息，用于前后端之间传递信息
+ * 用户信息，用于服务内部与外界进行数据传输
  *
  * @author timeboy
  * @version 1.0.0
  * @date 2023/04/26
  */
-public class UserVO implements Serializable {
-    private static final long serialVersionUID = -1130874931912964078L;
+public class UserDTO {
     /**
      * 用户的邮箱，用于标识唯一的用户，唯一索引
      */
@@ -25,10 +23,19 @@ public class UserVO implements Serializable {
      */
     private Boolean status;
 
-    public UserVO(String email, String password, Boolean status) {
+    public UserDTO(String email, String password, Boolean status) {
         this.email = email;
         this.password = password;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                '}';
     }
 
     @Override
@@ -39,17 +46,8 @@ public class UserVO implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        UserVO userVO = (UserVO) o;
-        return Objects.equals(email, userVO.email) && Objects.equals(password, userVO.password) && Objects.equals(status, userVO.status);
-    }
-
-    @Override
-    public String toString() {
-        return "UserVO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                '}';
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(email, userDTO.email) && Objects.equals(password, userDTO.password) && Objects.equals(status, userDTO.status);
     }
 
     @Override
@@ -80,4 +78,6 @@ public class UserVO implements Serializable {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+
 }

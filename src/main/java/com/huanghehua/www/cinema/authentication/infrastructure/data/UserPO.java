@@ -1,4 +1,4 @@
-package com.huanghehua.www.authentication.infrastructure.data;
+package com.huanghehua.www.cinema.authentication.infrastructure.data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

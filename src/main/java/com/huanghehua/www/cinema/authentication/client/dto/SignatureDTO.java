@@ -1,4 +1,4 @@
-package com.huanghehua.www.authentication.client.dto;
+package com.huanghehua.www.cinema.authentication.client.dto;
 
 import java.util.Objects;
 

@@ -1,8 +1,8 @@
-package com.huanghehua.www.authentication.infrastructure.gatewayimpl;
+package com.huanghehua.www.cinema.authentication.infrastructure.gatewayimpl;
 
-import com.huanghehua.www.authentication.domain.gateway.LoginGateWay;
-import com.huanghehua.www.authentication.infrastructure.data.UserPO;
-import com.huanghehua.www.authentication.infrastructure.mapper.UserMapper;
+import com.huanghehua.www.cinema.authentication.domain.gateway.LoginGateWay;
+import com.huanghehua.www.cinema.authentication.infrastructure.data.UserPO;
+import com.huanghehua.www.cinema.authentication.infrastructure.mapper.UserMapper;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
 

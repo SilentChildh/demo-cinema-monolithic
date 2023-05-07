@@ -1,6 +1,6 @@
-package com.huanghehua.www.authentication.infrastructure.mapper;
+package com.huanghehua.www.cinema.authentication.infrastructure.mapper;
 
-import com.huanghehua.www.authentication.infrastructure.data.UserPO;
+import com.huanghehua.www.cinema.authentication.infrastructure.data.UserPO;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Mapper;
 import com.huanghehua.www.orm.annotation.Param;

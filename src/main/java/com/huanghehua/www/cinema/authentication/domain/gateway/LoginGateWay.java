@@ -1,4 +1,4 @@
-package com.huanghehua.www.authentication.domain.gateway;
+package com.huanghehua.www.cinema.authentication.domain.gateway;
 
 /**
  * 登录

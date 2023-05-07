@@ -1,12 +1,12 @@
-package com.huanghehua.www.authentication.app.executor;
+package com.huanghehua.www.cinema.authentication.app.executor;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.huanghehua.www.authentication.client.api.Login;
-import com.huanghehua.www.authentication.client.dto.SignatureDTO;
-import com.huanghehua.www.authentication.domain.gateway.LoginGateWay;
-import com.huanghehua.www.authentication.infrastructure.gatewayimpl.LoginGateWayImpl;
+import com.huanghehua.www.cinema.authentication.client.api.Login;
+import com.huanghehua.www.cinema.authentication.client.dto.SignatureDTO;
+import com.huanghehua.www.cinema.authentication.domain.gateway.LoginGateWay;
+import com.huanghehua.www.cinema.authentication.infrastructure.gatewayimpl.LoginGateWayImpl;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.handler.ParametersVerifyHandler;
 import com.huanghehua.www.dispatch.model.VerifyServiceMethodParam;
