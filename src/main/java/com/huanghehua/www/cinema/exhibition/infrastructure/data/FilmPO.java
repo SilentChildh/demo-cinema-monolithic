@@ -1,4 +1,4 @@
-package com.huanghehua.www.exhibition.infrastructure.data;
+package com.huanghehua.www.cinema.exhibition.infrastructure.data;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,6 +60,9 @@ public class FilmPO {
         this.poster = poster;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public FilmPO() {
     }
 
     public FilmPO(Long id, String name, String director, String actor,

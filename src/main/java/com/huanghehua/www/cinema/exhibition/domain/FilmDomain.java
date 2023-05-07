@@ -1,9 +1,10 @@
-package com.huanghehua.www.exhibition.domain;
+package com.huanghehua.www.cinema.exhibition.domain;
 
-import com.huanghehua.www.exhibition.domain.gateway.ShowGateWay;
-import com.huanghehua.www.exhibition.infrastructure.gatewayimpl.ShowGateWayImpl;
+import com.huanghehua.www.cinema.exhibition.domain.gateway.ShowGateWay;
+import com.huanghehua.www.cinema.exhibition.infrastructure.gatewayimpl.ShowGateWayImpl;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
+import com.huanghehua.www.common.PageAbility;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -57,12 +58,14 @@ public class FilmDomain {
     public FilmDomain() {
     }
 
-    // TODO 如何获取网关实现类？该注解在此处并没有用
+    // TODO 造成依赖了吗？
     @Reference(ShowGateWayImpl.class)
     private ShowGateWay showGateWay;
 
+    public List<FilmDomain> getFilm(String name, PageAbility pageAbility) {
+        return showGateWay.getFilm(name, pageAbility);
+    }
     public List<FilmDomain> getFilm(String name) {
-        // TODO 获取得设计为分页的形式
         return showGateWay.getFilm(name);
     }
 
