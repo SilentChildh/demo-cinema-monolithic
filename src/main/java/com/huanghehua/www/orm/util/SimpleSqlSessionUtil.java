@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  **/
 
 public class SimpleSqlSessionUtil {
-    private static final Logger LOGGER = Logger.getLogger("com.huanghehua.www.framework.orm.com.huanghehua.www.dispatch.util.SimpleSqlSessionUtil");
+    private static final Logger LOGGER = Logger.getLogger("com.huanghehua.www.orm.util.SimpleSqlSessionUtil");
     /**
      * 该集合中保存了所有已存在的SqlSessionFactory实例。对于每一个工厂类应该都是保存不同数据的实例。<br/>
      * Key为对应数据库连接池配置文件的全限定类名，Value是根据数据库连接池创建的工厂类。<br/>

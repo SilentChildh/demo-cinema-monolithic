@@ -132,5 +132,5 @@ public class ApplicationMapperContext implements MapperFactory {
     }
 
     private static final String SQL_BUNDLE = "sqlBundle";
-    private static final Logger LOGGER = Logger.getLogger("com.huanghehua.www.framework.orm.com.huanghehua.www.dispatch.util.MapperFactory");
+    private static final Logger LOGGER = Logger.getLogger("com.huanghehua.www.orm.util.MapperFactory");
 }
