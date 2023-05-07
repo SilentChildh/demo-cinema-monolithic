@@ -126,7 +126,7 @@ public class SimpleSqlSession implements SqlSession {
      */
     @Override
     public int update(String sqlId, Object parameters) throws SQLException {
-        return this.update(sqlId, parameters);
+        return this.update(sqlId, parameters, Statement.NO_GENERATED_KEYS);
     }
 
     /**
