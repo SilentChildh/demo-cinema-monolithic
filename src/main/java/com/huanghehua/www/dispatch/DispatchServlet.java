@@ -50,8 +50,9 @@ public class DispatchServlet extends HttpServlet {
         // 接收响应结果
         CommonResult<?> dispatchResult = dispatch(request);
         // 设置响应码
-        Integer httpCode = dispatchResult.getHttpCode();
-        response.setStatus(httpCode);
+        // TODO：设置错误码后，axios会catch处理error
+        /*Integer httpCode = dispatchResult.getHttpCode();
+        response.setStatus(httpCode);*/
         // 响应请求
         response.getWriter().write(JsonUtils.toJsonString(dispatchResult));
 
@@ -131,11 +132,9 @@ public class DispatchServlet extends HttpServlet {
     @Override
     public void init() {
         final String packageName = "com.huanghehua.www";
-        final String packageName2 = "lib";
         // 注册bean实例
         ApplicationBeanContext applicationBeanContext = new ApplicationBeanContext();
         applicationBeanContext.registerMetaBean(packageName);
-        applicationBeanContext.registerMetaBean(packageName2);
 
         // 注册请求与controller的对应关系
         try {
