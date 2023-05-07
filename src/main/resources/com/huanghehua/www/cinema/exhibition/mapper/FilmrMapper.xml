@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="com.huanghehua.www.cinema.exhibition.infrastructure.mapper.FilmMapper">
+
+    <select id="selectListByNameWithPage" resultType="com.huanghehua.www.cinema.exhibition.infrastructure.data.FilmPO">
+        select * from film
+        where name = #{name} and createTime &lt;= (select createTime from film
+        where name = #{name}
+        order by createTime desc
+        limit #{fromIndex}, 1)
+        order by createTime desc
+        limit #{currentPageSize};
+    </select>
+
+    <select id="selectListByName" resultType="com.huanghehua.www.cinema.exhibition.infrastructure.data.FilmPO">
+        select * from film
+        where name = #{name}
+    </select>
+
+    <select id="selectCountByName" resultType="java.lang.Long">
+        select count(*) from film
+        where name = #{name}
+    </select>
+
+</mapper>
