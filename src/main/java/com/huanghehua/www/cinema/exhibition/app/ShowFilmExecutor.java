@@ -3,7 +3,7 @@ package com.huanghehua.www.cinema.exhibition.app;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.handler.ParametersVerifyHandler;
 import com.huanghehua.www.dispatch.model.VerifyServiceMethodParam;
-import com.huanghehua.www.cinema.exhibition.client.Show;
+import com.huanghehua.www.cinema.exhibition.client.ShowFilm;
 import com.huanghehua.www.cinema.exhibition.domain.FilmDomain;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 @Bean
 @Interceptable
-public class ShowExecutor implements Show {
+public class ShowFilmExecutor implements ShowFilm {
     private static final Logger LOGGER = Logger.getAnonymousLogger();
 
     @Reference
@@ -33,7 +33,7 @@ public class ShowExecutor implements Show {
     public CommonResult<?> show(String name, PageAbility pageAbility) {
         LOGGER.log(Level.INFO, "{0} invoke show() method", Thread.currentThread());
         // 验证参数
-        VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ShowExecutor.class,
+        VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ShowFilmExecutor.class,
                 "show",
                 new Class<?>[]{String.class, PageAbility.class}, new Object[]{name, pageAbility});
         ParametersVerifyHandler.handle(verifyServiceMethodParam);
@@ -47,7 +47,7 @@ public class ShowExecutor implements Show {
     @Override
     public CommonResult<?> show(String name) {
         // 验证参数
-        VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ShowExecutor.class,
+        VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ShowFilmExecutor.class,
                 "show",
                 new Class<?>[]{String.class}, new Object[]{name});
         ParametersVerifyHandler.handle(verifyServiceMethodParam);
