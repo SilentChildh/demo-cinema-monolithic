@@ -3,7 +3,7 @@ package com.huanghehua.www.authentication.client.dto;
 import java.util.Objects;
 
 /**
- * 用户信息
+ * 用户信息，用于服务内部与外界进行数据传输
  *
  * @author timeboy
  * @version 1.0.0

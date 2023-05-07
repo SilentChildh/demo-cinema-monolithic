@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * 用户信息数据值信息
+ * 用户信息数据值信息，用于前后端之间传递信息
  *
  * @author timeboy
  * @version 1.0.0

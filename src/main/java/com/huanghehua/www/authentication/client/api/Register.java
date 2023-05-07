@@ -1,6 +1,5 @@
 package com.huanghehua.www.authentication.client.api;
 
-import com.huanghehua.www.authentication.client.dto.UserDTO;
 import com.huanghehua.www.common.CommonResult;
 
 /**
@@ -13,9 +12,10 @@ import com.huanghehua.www.common.CommonResult;
 public interface Register {
     /**
      * 注册，返回一个含有用户信息的结果
-     * @param email 邮箱
+     *
+     * @param email    邮箱
      * @param password 密码
-     * @return {@link CommonResult}<{@link SignatureDTO}>
+     * @return {@link CommonResult}<{@link ?}>
      */
-    CommonResult<UserDTO> register(String email, String password);
+    CommonResult<?> register(String email, String password);
 }
