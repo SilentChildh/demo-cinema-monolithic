@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Cinema</title>
+    <script src="vue.js"></script>
+    <script src="axios.js"></script>
+</head>
+<body>
+<div id="app">
+    <login></login>
+    <register></register>
+</div>
+<script>
+    const login = Vue.extend({
+        template: `
+          <form @submit.prevent="login()">
+          <fieldset>
+            <legend>登录</legend>
+            <label>邮箱：<input type="email" v-model="email"/></label><br>
+            <label>密码：<input type="password" v-model="password"/></label><br>
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+        `,
+        data() {
+            return {
+                email: '',
+                password: '',
+            }
+        },
+        methods: {
+            login() {
+                axios.post('http://localhost:8080/api/authentication/login', {
+                    email : this.email,
+                    password : this.password
+                })
+                    .then(response => {
+                        const commonResult = response.data;
+                        window.location.href = "/frontend/homepage.html";
+                        alert(commonResult.tipMessage + "我在这success");
+                    })
+                    .catch(error => {
+                        alert(error)
+                        alert(response.data.tipMessage + "我在这fail");
+                    });
+            }
+        }
+    })
+
+    const register = Vue.extend({
+        template: `
+          <form @submit.prevent="register()">
+          <fieldset>
+            <legend>注册</legend>
+            <label>邮箱：<input type="email" v-model="email"/></label><br>
+            <label>密码：<input type="password" v-model="password"/></label><br>
+
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+        `,
+        data() {
+            return {
+                // 用户的邮箱，用于标识唯一的用户，唯一索引
+                email: '',
+                // 用户的密码，用于配合邮箱登录我域名之下的系统
+                password: '',
+                // 用户的状态，true为启用，false为禁用
+                status: true
+            }
+        },
+        methods: {
+            register() {
+                axios.post('http://localhost:8080/www.huanghehua.com/api/authentication/register', {
+                    email : this.email,
+                    password : this.password,
+                    status: true
+                })
+                    .then(response => {
+                        const commonResult = JSON.stringify(response.data);
+                        console.log(commonResult)
+                        alert(response.data.tipMessage);
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage);
+                    });
+            }
+        }
+
+    })
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            login, register
+        }
+    });
+</script>
+</body>
+</html>
