@@ -5,7 +5,7 @@
         insert into user
         (email, password, status)
         values
-        (#{email}, #{password}, #{status});
+        (#{email}, #{password}, 1);
     </insert>
 
 
