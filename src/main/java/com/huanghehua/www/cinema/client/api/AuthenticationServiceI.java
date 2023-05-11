@@ -7,7 +7,7 @@ import com.huanghehua.www.common.CommonResult;
  * @version 1.0.0
  * @date 2023/04/26
  */
-public interface LoginServiceI {
+public interface AuthenticationServiceI {
     /**
      * 登录，返回一个含有JWT的数字签名
      *
@@ -16,4 +16,12 @@ public interface LoginServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> login(String email, String password);
+    /**
+     * 注册，返回一个含有用户信息的结果
+     *
+     * @param email    邮箱
+     * @param password 密码
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> register(String email, String password);
 }

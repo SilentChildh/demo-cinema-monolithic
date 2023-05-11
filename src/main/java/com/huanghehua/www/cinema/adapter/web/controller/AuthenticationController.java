@@ -1,8 +1,8 @@
 package com.huanghehua.www.cinema.adapter.web.controller;
 
 
-import com.huanghehua.www.cinema.app.service.LoginServiceImpl;
-import com.huanghehua.www.cinema.client.api.LoginServiceI;
+import com.huanghehua.www.cinema.app.service.AuthenticationServiceImpl;
+import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
 import com.huanghehua.www.cinema.client.dto.UserDTO;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
@@ -18,9 +18,9 @@ import com.huanghehua.www.ioc.annotation.Reference;
  */
 @Bean
 @Request("/authentication")
-public class LoginController {
-    @Reference(LoginServiceImpl.class)
-    private LoginServiceI loginServiceIExecutor;
+public class AuthenticationController {
+    @Reference(AuthenticationServiceImpl.class)
+    private AuthenticationServiceI authenticationService;
 
     /**
      * 获取请求中携带的用户信息，进行登录操作，成功则返回带有JWT的信息，否则返回错误提示信息。
@@ -32,7 +32,19 @@ public class LoginController {
     public CommonResult<?> login(UserDTO userDto) {
         String email = userDto.getEmail();
         String password = userDto.getPassword();
-        return loginServiceIExecutor.login(email, password);
+        return authenticationService.login(email, password);
     }
 
+    /**
+     * 获取请求中携带的用户信息，进行登录操作，成功则返回带有JWT的信息，否则返回错误提示信息。
+     *
+     * @param userDto 用户请求数据
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    @Request(value = "/register", method = "post")
+    public CommonResult<?> register(UserDTO userDto) {
+        String email = userDto.getEmail();
+        String password = userDto.getPassword();
+        return authenticationService.register(email, password);
+    }
 }

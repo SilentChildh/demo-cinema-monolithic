@@ -1,10 +1,8 @@
 package com.huanghehua.www.cinema.app.service;
 
-import com.huanghehua.www.cinema.domain.model.OrderModel;
+import com.huanghehua.www.cinema.domain.order.model.OrderModel;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.ioc.annotation.Bean;
-import com.huanghehua.www.ioc.annotation.Reference;
-
 /**
  * 订单执行程序
  *
@@ -14,10 +12,10 @@ import com.huanghehua.www.ioc.annotation.Reference;
  */
 @Bean
 public class OrderServiceImpl {
-    @Reference
-    private OrderModel orderModel;
 
     public CommonResult<?> order() {
+        // 新建Order领域中的order模型
+        OrderModel orderModel = new OrderModel();
         orderModel.order();
     }
 

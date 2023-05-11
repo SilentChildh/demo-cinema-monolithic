@@ -1,4 +1,4 @@
-package com.huanghehua.www.cinema.domain.model;
+package com.huanghehua.www.cinema.domain.order.model;
 
 import com.huanghehua.www.cinema.domain.gateway.OrderGateWay;
 import com.huanghehua.www.cinema.infrastructure.gatewayimpl.OrderGateWayImpl;
@@ -50,7 +50,7 @@ public class SessionModel {
      * @return {@link List}<{@link SessionModel}>
      */
     public List<SessionModel> getSessions(Long filmId) {
-        return orderGateWay.getSessions(filmId);
+        return orderGateWay.listSessions(filmId);
     }
 
 

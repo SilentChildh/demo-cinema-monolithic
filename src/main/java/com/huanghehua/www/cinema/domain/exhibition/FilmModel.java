@@ -1,7 +1,7 @@
-package com.huanghehua.www.cinema.domain.model;
+package com.huanghehua.www.cinema.domain.exhibition;
 
-import com.huanghehua.www.cinema.domain.gateway.ShowGateWay;
-import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ShowGateWayImpl;
+import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
+import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ExhibitionGateWayImpl;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
 import com.huanghehua.www.common.PageAbility;
@@ -59,14 +59,14 @@ public class FilmModel {
     }
 
     // TODO 造成依赖了吗？
-    @Reference(ShowGateWayImpl.class)
-    private ShowGateWay showGateWay;
+    @Reference(ExhibitionGateWayImpl.class)
+    private ExhibitionGateWay exhibitionGateWay;
 
     public List<FilmModel> getFilm(String name, PageAbility pageAbility) {
-        return showGateWay.getFilm(name, pageAbility);
+        return exhibitionGateWay.listPageFilm(name, pageAbility);
     }
     public List<FilmModel> getFilm(String name) {
-        return showGateWay.getFilm(name);
+        return exhibitionGateWay.listFilm(name);
     }
 
     public String getName() {
@@ -117,11 +117,11 @@ public class FilmModel {
         this.poster = poster;
     }
 
-    public ShowGateWay getShowGateWay() {
-        return showGateWay;
+    public ExhibitionGateWay getShowGateWay() {
+        return exhibitionGateWay;
     }
 
-    public void setShowGateWay(ShowGateWay showGateWay) {
-        this.showGateWay = showGateWay;
+    public void setShowGateWay(ExhibitionGateWay exhibitionGateWay) {
+        this.exhibitionGateWay = exhibitionGateWay;
     }
 }

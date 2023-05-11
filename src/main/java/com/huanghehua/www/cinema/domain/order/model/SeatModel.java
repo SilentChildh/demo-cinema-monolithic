@@ -1,4 +1,4 @@
-package com.huanghehua.www.cinema.domain.model;
+package com.huanghehua.www.cinema.domain.order.model;
 
 import java.util.List;
 

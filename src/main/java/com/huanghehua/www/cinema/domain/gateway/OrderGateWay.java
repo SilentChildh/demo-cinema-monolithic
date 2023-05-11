@@ -1,6 +1,6 @@
 package com.huanghehua.www.cinema.domain.gateway;
 
-import com.huanghehua.www.cinema.domain.model.SessionModel;
+import com.huanghehua.www.cinema.domain.order.model.SessionModel;
 
 import java.util.List;
 
@@ -25,5 +25,5 @@ public interface OrderGateWay {
      * @param filmId 影片id
      * @return {@link List}<{@link SessionModel}>
      */
-    List<SessionModel> getSessions(Long filmId);
+    List<SessionModel> listSessions(Long filmId);
 }

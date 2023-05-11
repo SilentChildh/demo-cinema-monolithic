@@ -1,7 +1,7 @@
 package com.huanghehua.www.cinema.adapter.web.controller;
 
-import com.huanghehua.www.cinema.app.service.ShowFilmServiceImpl;
-import com.huanghehua.www.cinema.client.api.ShowFilmServiceI;
+import com.huanghehua.www.cinema.app.service.ExhibitionServiceImpl;
+import com.huanghehua.www.cinema.client.api.ExhibitionServiceI;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
 import com.huanghehua.www.dispatch.annotation.RequestParam;
@@ -18,10 +18,10 @@ import com.huanghehua.www.common.PageAbility;
  */
 @Bean
 @Request("/exhibition")
-public class FilmController {
+public class ExhibitionController {
 
-    @Reference(ShowFilmServiceImpl.class)
-    private ShowFilmServiceI showFilmServiceIExecutor;
+    @Reference(ExhibitionServiceImpl.class)
+    private ExhibitionServiceI showFilmService;
 
 
     @Request(value = "/info",method = "get")
@@ -31,6 +31,6 @@ public class FilmController {
 
         PageAbility pageAbility = new PageAbility(maxPageSize, currentPageNumber);
 
-        return showFilmServiceIExecutor.show(name, pageAbility);
+        return showFilmService.show(name, pageAbility);
     }
 }

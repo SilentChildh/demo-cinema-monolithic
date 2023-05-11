@@ -1,8 +1,8 @@
 package com.huanghehua.www.cinema.infrastructure.gatewayimpl;
 
-import com.huanghehua.www.cinema.domain.gateway.ShowGateWay;
+import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
 import com.huanghehua.www.cinema.infrastructure.data.FilmPO;
-import com.huanghehua.www.cinema.domain.model.FilmModel;
+import com.huanghehua.www.cinema.domain.exhibition.FilmModel;
 import com.huanghehua.www.cinema.infrastructure.mapper.FilmMapper;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
@@ -21,11 +21,11 @@ import java.util.List;
  * @date 2023/05/07
  */
 @Bean
-public class ShowGateWayImpl implements ShowGateWay {
+public class ExhibitionGateWayImpl implements ExhibitionGateWay {
     @Reference
     private FilmMapper filmMapper;
     @Override
-    public List<FilmModel> getFilm(String name, PageAbility pageAbility) {
+    public List<FilmModel> listPageFilm(String name, PageAbility pageAbility) {
         // 先设置记录总数（以便完成逻辑分页），再获取开始索引值和当前页面大小
         Long count = filmMapper.selectCountByName(name);
         pageAbility.setRecordCount(Math.toIntExact(count));
@@ -53,7 +53,7 @@ public class ShowGateWayImpl implements ShowGateWay {
     }
 
     @Override
-    public List<FilmModel> getFilm(String name) {
+    public List<FilmModel> listFilm(String name) {
         ArrayList<FilmModel> filmModels = new ArrayList<>(12);
         List<FilmPO> films = filmMapper.selectListByName(name);
 

@@ -3,10 +3,11 @@ package com.huanghehua.www.cinema.app.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.huanghehua.www.cinema.client.api.LoginServiceI;
-import com.huanghehua.www.cinema.client.dto.SignatureDTO;
-import com.huanghehua.www.cinema.domain.gateway.LoginGateWay;
-import com.huanghehua.www.cinema.infrastructure.gatewayimpl.LoginGateWayImpl;
+import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
+import com.huanghehua.www.cinema.client.dto.JwtSignatureDTO;
+import com.huanghehua.www.cinema.client.dto.UserDTO;
+import com.huanghehua.www.cinema.domain.gateway.AuthenticationGateWay;
+import com.huanghehua.www.cinema.infrastructure.gatewayimpl.AuthenticationGateWayImpl;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.handler.ParametersVerifyHandler;
 import com.huanghehua.www.dispatch.model.VerifyServiceMethodParam;
@@ -29,31 +30,24 @@ import java.time.Period;
  */
 @Bean
 @Interceptable
-public class LoginServiceImpl implements LoginServiceI {
-
-    /**
-     * 登录domain
-     */
-    @Reference(LoginGateWayImpl.class)
-    private LoginGateWay loginGateWay;
-
-    /**
-     * 一天的间隔时间
-     */
-    private final Period interval = Period.ofDays(1);
+public class AuthenticationServiceImpl implements AuthenticationServiceI {
+    @Reference(AuthenticationGateWayImpl.class)
+    private AuthenticationGateWay authenticationGateWay;
 
     @Override
     public CommonResult<?> login(@RegexPattern(".*@.*") String email,
                                             @Size(min = 6, max = 18) String password) {
+        // 一天的间隔时间
+        final Period interval = Period.ofDays(1);
 
         // 参数检验
-        VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(LoginServiceImpl.class,
-                "login",
+        VerifyServiceMethodParam verifyServiceMethodParam =
+                new VerifyServiceMethodParam(AuthenticationServiceImpl.class, "login",
                 new Class<?>[]{String.class, String.class}, new Object[]{email, password});
         ParametersVerifyHandler.handle(verifyServiceMethodParam);
 
         // 执行登录业务
-        boolean doLogin = loginGateWay.doLogin(email, password);
+        boolean doLogin = authenticationGateWay.doLogin(email, password);
 
         // 登录失败，直接返回
         if (!doLogin) {
@@ -74,8 +68,31 @@ public class LoginServiceImpl implements LoginServiceI {
         String jwt = builder.sign(Algorithm.HMAC256(secretKey));
 
         // JWT封装为DTO，并返回
-        SignatureDTO signatureDTO = new SignatureDTO(jwt);
-        return CommonResult.operateSuccess(signatureDTO);
+        JwtSignatureDTO jwtSignatureDTO = new JwtSignatureDTO(jwt);
+        return CommonResult.operateSuccess(jwtSignatureDTO);
+
+    }
+
+
+    @Override
+    public CommonResult<?> register(@RegexPattern(".*@.*") String email,
+                                    @Size(min = 6, max = 18) String password) {
+
+        // 参数检验
+        VerifyServiceMethodParam verifyServiceMethodParam =
+                new VerifyServiceMethodParam(AuthenticationServiceImpl.class, "register",
+                new Class<?>[]{String.class, String.class}, new Object[]{email, password});
+        ParametersVerifyHandler.handle(verifyServiceMethodParam);
+
+        // 执行注册业务
+        boolean doRegister = authenticationGateWay.doRegister(email, password);
+
+        // 注册失败，直接返回
+        if (!doRegister) {
+            return CommonResult.operateFail("login fail! please retry...");
+        }
+
+        return CommonResult.operateSuccess(new UserDTO(email, password, true));
 
     }
 }

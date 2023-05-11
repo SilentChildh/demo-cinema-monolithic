@@ -1,6 +1,6 @@
 package com.huanghehua.www.cinema.infrastructure.gatewayimpl;
 
-import com.huanghehua.www.cinema.domain.model.SessionModel;
+import com.huanghehua.www.cinema.domain.order.model.SessionModel;
 import com.huanghehua.www.cinema.domain.gateway.OrderGateWay;
 import com.huanghehua.www.cinema.infrastructure.data.SessionPO;
 import com.huanghehua.www.cinema.infrastructure.mapper.OrderMapper;
@@ -31,7 +31,7 @@ public class OrderGateWayImpl implements OrderGateWay {
     }
 
     @Override
-    public List<SessionModel> getSessions(Long filmId) {
+    public List<SessionModel> listSessions(Long filmId) {
 
         ArrayList<SessionModel> sessionModels = new ArrayList<>(12);
         List<SessionPO> sessions = sessionMapper.selectListByFilmId(filmId);

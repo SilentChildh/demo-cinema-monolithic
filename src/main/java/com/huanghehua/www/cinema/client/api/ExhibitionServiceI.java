@@ -10,7 +10,7 @@ import com.huanghehua.www.common.PageAbility;
  * @version 1.0.0
  * @date 2023/05/07
  */
-public interface ShowFilmServiceI {
+public interface ExhibitionServiceI {
     /**
      * 显示影片信息
      *

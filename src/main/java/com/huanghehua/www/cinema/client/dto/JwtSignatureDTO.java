@@ -8,10 +8,10 @@ import java.util.Objects;
  * @version 1.0.0
  * @date 2023/04/26
  */
-public class SignatureDTO {
+public class JwtSignatureDTO {
     private String jwt;
 
-    public SignatureDTO(String jwt) {
+    public JwtSignatureDTO(String jwt) {
         this.jwt = jwt;
     }
 
@@ -31,8 +31,8 @@ public class SignatureDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SignatureDTO signatureDTO = (SignatureDTO) o;
-        return Objects.equals(jwt, signatureDTO.jwt);
+        JwtSignatureDTO jwtSignatureDTO = (JwtSignatureDTO) o;
+        return Objects.equals(jwt, jwtSignatureDTO.jwt);
     }
 
     @Override

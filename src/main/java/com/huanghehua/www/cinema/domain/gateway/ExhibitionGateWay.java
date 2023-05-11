@@ -1,6 +1,6 @@
 package com.huanghehua.www.cinema.domain.gateway;
 
-import com.huanghehua.www.cinema.domain.model.FilmModel;
+import com.huanghehua.www.cinema.domain.exhibition.FilmModel;
 import com.huanghehua.www.common.PageAbility;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @version 1.0.0
  * @date 2023/05/07
  */
-public interface ShowGateWay {
+public interface ExhibitionGateWay {
     /**
      * 分页形式
      * 通过影片名称得到电影
@@ -21,7 +21,7 @@ public interface ShowGateWay {
      * @param pageAbility 页面能力
      * @return {@link List}<{@link FilmModel}>
      */
-    List<FilmModel> getFilm(String name, PageAbility pageAbility);
+    List<FilmModel> listPageFilm(String name, PageAbility pageAbility);
 
     /**
      * 得到电影
@@ -29,5 +29,5 @@ public interface ShowGateWay {
      * @param name 名字
      * @return {@link List}<{@link FilmModel}>
      */
-    List<FilmModel> getFilm(String name);
+    List<FilmModel> listFilm(String name);
 }
