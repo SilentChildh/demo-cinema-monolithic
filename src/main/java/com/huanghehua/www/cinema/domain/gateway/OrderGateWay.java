@@ -17,4 +17,12 @@ public interface OrderGateWay {
      * @return boolean
      */
     boolean addOrder(Long userId, Long scheduleId, Long seatId);
+
+    /**
+     * 删除订单
+     *
+     * @param orderId 订单id
+     * @return boolean
+     */
+    boolean removeOrder(Long orderId);
 }

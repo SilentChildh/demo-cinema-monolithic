@@ -31,4 +31,9 @@ public class OrderGateWayImpl implements OrderGateWay {
 
         return orderMapper.insertOrder(userId, scheduleId, seatId, price) > 0;
     }
+
+    @Override
+    public boolean removeOrder(Long orderId) {
+        orderMapper.
+    }
 }

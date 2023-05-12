@@ -3,6 +3,7 @@ package com.huanghehua.www.cinema.app.service;
 import com.huanghehua.www.cinema.app.convertor.ScheduleConvertor;
 import com.huanghehua.www.cinema.app.convertor.SeatConvertor;
 import com.huanghehua.www.cinema.app.executor.command.OrderAddCmdExe;
+import com.huanghehua.www.cinema.app.executor.command.OrderRemoveCmdExe;
 import com.huanghehua.www.cinema.app.executor.query.OrderDetailGetQryExe;
 import com.huanghehua.www.cinema.app.executor.query.HistoryOrderDetailListQryExe;
 import com.huanghehua.www.cinema.client.api.OrderServiceI;
@@ -11,6 +12,7 @@ import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.ScheduleDTO;
 import com.huanghehua.www.cinema.client.dto.SeatDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.OrderRemoveCmd;
 import com.huanghehua.www.cinema.client.dto.query.OrderDetailGetQry;
 import com.huanghehua.www.cinema.client.dto.query.HistoryOrderDetailListQry;
 import com.huanghehua.www.cinema.infrastructure.data.SchedulePO;
@@ -38,6 +40,8 @@ public class OrderServiceImpl implements OrderServiceI {
     @Reference
     private OrderAddCmdExe orderAddCmdExe;
     @Reference
+    private OrderRemoveCmdExe orderRemoveCmdExe;
+    @Reference
     private OrderDetailGetQryExe orderDetailGetQryExe;
     @Reference
     private HistoryOrderDetailListQryExe historyOrderDetailListQryExe;
@@ -49,6 +53,11 @@ public class OrderServiceImpl implements OrderServiceI {
     @Override
     public CommonResult<?> order(OrderAddCmd orderAddCmd) {
         return orderAddCmdExe.execute(orderAddCmd);
+    }
+
+    @Override
+    public CommonResult<?> cancel(OrderRemoveCmd orderRemoveCmd) {
+        return orderRemoveCmdExe.execute(orderRemoveCmd);
     }
 
     @Override

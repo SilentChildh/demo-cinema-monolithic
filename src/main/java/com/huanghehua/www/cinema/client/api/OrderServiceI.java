@@ -3,6 +3,7 @@ package com.huanghehua.www.cinema.client.api;
 import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.OrderRemoveCmd;
 import com.huanghehua.www.cinema.client.dto.query.OrderDetailGetQry;
 import com.huanghehua.www.cinema.client.dto.query.HistoryOrderDetailListQry;
 import com.huanghehua.www.common.CommonResult;
@@ -24,6 +25,14 @@ public interface OrderServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> order(OrderAddCmd orderAddCmd);
+
+    /**
+     * 取消订单
+     *
+     * @param orderRemoveCmd 订单删除cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> cancel(OrderRemoveCmd orderRemoveCmd);
 
     /**
      * 根据电影id，显示场次

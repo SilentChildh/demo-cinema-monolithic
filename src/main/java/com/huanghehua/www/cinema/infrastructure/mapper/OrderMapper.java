@@ -38,4 +38,12 @@ public interface OrderMapper {
      * @return {@link OrderPO}
      */
     OrderPO getOrderById(@Param("id") Long id);
+
+    /**
+     * 更新订单状态, 1为有效，0为无效
+     *
+     * @param status 状态
+     * @return int
+     */
+    int updateOrderStatus(@Param("status") int status);
 }

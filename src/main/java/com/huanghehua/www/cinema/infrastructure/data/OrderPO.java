@@ -33,7 +33,10 @@ public class OrderPO {
      * 价格
      */
     private BigDecimal price;
-
+    /**
+     * 状态,true为有效，false为无效
+     */
+    private Boolean status;
     /**
      * 创建时间
      */
@@ -43,49 +46,19 @@ public class OrderPO {
      */
     private LocalDateTime updateTime;
 
-    public OrderPO(Long id, Long userId, Long scheduleId) {
-        this.id = id;
-        this.userId = userId;
-        this.scheduleId = scheduleId;
-    }
-
-    public OrderPO(Long id, Long userId, Long scheduleId, BigDecimal price) {
-        this.id = id;
-        this.userId = userId;
-        this.scheduleId = scheduleId;
-        this.price = price;
-    }
-
-    public OrderPO(Long id, Long userId, Long scheduleId, Long seatId, BigDecimal price) {
-        this.id = id;
-        this.userId = userId;
-        this.scheduleId = scheduleId;
-        this.seatId = seatId;
-        this.price = price;
-    }
-
-    public OrderPO(Long id, Long userId, Long scheduleId,
-                   LocalDateTime createTime, LocalDateTime updateTime) {
-        this.id = id;
-        this.userId = userId;
-        this.scheduleId = scheduleId;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
 
     public OrderPO() {
     }
 
-    public OrderPO(Long id, Long userId, Long scheduleId, Long seatId,
-                   BigDecimal price, LocalDateTime createTime, LocalDateTime updateTime) {
+    public OrderPO(Long id, Long userId, Long scheduleId, Long seatId, BigDecimal price, Boolean status) {
         this.id = id;
         this.userId = userId;
         this.scheduleId = scheduleId;
         this.seatId = seatId;
         this.price = price;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
+        this.status = status;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -96,12 +69,34 @@ public class OrderPO {
             return false;
         }
         OrderPO orderPO = (OrderPO) o;
-        return Objects.equals(id, orderPO.id) && Objects.equals(userId, orderPO.userId) && Objects.equals(scheduleId, orderPO.scheduleId) && Objects.equals(seatId, orderPO.seatId) && Objects.equals(price, orderPO.price) && Objects.equals(createTime, orderPO.createTime) && Objects.equals(updateTime, orderPO.updateTime);
+        return Objects.equals(id, orderPO.id) && Objects.equals(userId, orderPO.userId) && Objects.equals(scheduleId, orderPO.scheduleId) && Objects.equals(seatId, orderPO.seatId) && Objects.equals(price, orderPO.price) && Objects.equals(status, orderPO.status) && Objects.equals(createTime, orderPO.createTime) && Objects.equals(updateTime, orderPO.updateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, scheduleId, seatId, price, createTime, updateTime);
+        return Objects.hash(id, userId, scheduleId, seatId, price, status, createTime, updateTime);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderPO{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", scheduleId=" + scheduleId +
+                ", seatId=" + seatId +
+                ", price=" + price +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public BigDecimal getPrice() {
@@ -118,19 +113,6 @@ public class OrderPO {
 
     public void setSeatId(Long seatId) {
         this.seatId = seatId;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderPO{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", scheduleId=" + scheduleId +
-                ", seatId=" + seatId +
-                ", price=" + price +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
     }
 
     public Long getId() {

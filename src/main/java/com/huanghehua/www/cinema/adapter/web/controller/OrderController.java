@@ -8,6 +8,7 @@ import com.huanghehua.www.cinema.client.dto.FilmDTO;
 import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.OrderRemoveCmd;
 import com.huanghehua.www.cinema.client.dto.query.OrderDetailGetQry;
 import com.huanghehua.www.cinema.client.dto.query.HistoryOrderDetailListQry;
 import com.huanghehua.www.common.CommonResult;
@@ -43,6 +44,16 @@ public class OrderController {
     @Request(value = "/order", method = "post")
     public CommonResult<?> order(OrderAddCmd orderAddCmd) {
          return orderService.order(orderAddCmd);
+    }
+
+    /**
+     * 取消订单
+     *
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    @Request(value = "/cancel", method = "post")
+    public CommonResult<?> cancelOrder(OrderRemoveCmd orderRemoveCmd) {
+        return orderService.cancel(orderRemoveCmd);
     }
 
     /**
