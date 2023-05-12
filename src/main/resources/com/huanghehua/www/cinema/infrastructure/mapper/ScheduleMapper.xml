@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="com.huanghehua.www.cinema.infrastructure.mapper.ScheduleMapper">
+
+
+    <select id="listByFilmId" resultType="com.huanghehua.www.cinema.infrastructure.data.SchedulePO">
+        select * from schedule
+        where filmId = #{filmId}
+    </select>
+
+    <select id="getPriceById" resultType="java.math.BigDecimal">
+        select price from schedule
+        where id = #{id}
+    </select>
+
+    <select id="getHallIdById" resultType="java.lang.Long">
+        select hallId from schedule
+        where id = #{id}
+    </select>
+
+    <select id="getScheduleById" resultType="com.huanghehua.www.cinema.infrastructure.data.SchedulePO">
+        select * from schedule
+        where id = #{id}
+    </select>
+
+</mapper>

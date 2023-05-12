@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="com.huanghehua.www.cinema.infrastructure.mapper.OrderMapper">
+
+    <insert id="insertOrder">
+        insert into `order`
+        (userId, scheduleId, seatId, price)
+        values
+        (#{userId}, #{scheduleId}, #{seatId}, #{price})
+    </insert>
+
+    <select id="getOrderById" resultType="com.huanghehua.www.cinema.infrastructure.data.OrderPO">
+        select * from `order`
+        where id = #{id}
+    </select>
+
+</mapper>
