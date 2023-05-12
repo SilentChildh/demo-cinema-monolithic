@@ -9,7 +9,9 @@ import com.huanghehua.www.cinema.infrastructure.mapper.OrderMapper;
 import com.huanghehua.www.cinema.infrastructure.mapper.ScheduleMapper;
 import com.huanghehua.www.cinema.infrastructure.mapper.SeatMapper;
 import com.huanghehua.www.common.CommonResult;
+import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
+import com.huanghehua.www.ioc.spi.aop.Interceptable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +23,8 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  * @date 2023/05/12
  */
+@Bean
+@Interceptable
 public class OrderGetQryExe {
     @Reference
     private OrderMapper orderMapper;
