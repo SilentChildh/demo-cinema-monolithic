@@ -31,4 +31,12 @@ public interface ExhibitionGateWay {
      */
     List<FilmModel> listFilm(String name);
 
+
+    /**
+     * 通过电影id得到电影模型
+     *
+     * @param id id
+     * @return {@link FilmModel}
+     */
+    FilmModel getFilm(Long id);
 }

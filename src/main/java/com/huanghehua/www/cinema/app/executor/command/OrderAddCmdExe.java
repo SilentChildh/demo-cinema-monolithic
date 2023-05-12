@@ -9,6 +9,8 @@ import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
 import com.huanghehua.www.ioc.spi.aop.Interceptable;
 
+import java.util.Arrays;
+
 /**
  * 订单添加command 的 executor
  *
@@ -25,27 +27,43 @@ public class OrderAddCmdExe {
     @Reference
     private SeatMapper seatMapper;
 
+    /**
+     * 座位状态分段锁，保证状态同步更新
+     */
+    private static final Object[] SEAT_STATUS_LOCKS = new Object[100];
+    static {
+        // 填充分段锁
+        Arrays.fill(SEAT_STATUS_LOCKS, new Object());
+    }
 
     /**
-     * 座位状态锁，保证状态同步更新
+     * 利用分段锁{@code SEAT_STATUS_LOCKS}保证， 座位的同步更新
+     *
+     * @param orderAddCmd 订单添加cmd
+     * @return {@link CommonResult}<{@link ?}>
      */
-    private static final Object SEAT_STATUS_LOCK = new Object();
     public CommonResult<?> execute(OrderAddCmd orderAddCmd) {
         // 从cmd中获取信息
         Long userId = orderAddCmd.getUserId();
         Long scheduleId = orderAddCmd.getScheduleId();
         Long seatId = orderAddCmd.getSeatId();
 
-        // TODO 这里需要保证座位状态的同步更新，可以考虑使用异步任务完成， 以下的同步还未完成
-/*        synchronized (SEAT_STATUS_LOCK) {
-            // 将座位更新为占用状态
-            seatMapper.updateSeatStatusById(seatId, 1);
-        }*/
-
+        // 利用分段锁，分别处理不同场次的订单
+        synchronized (SEAT_STATUS_LOCKS[Math.toIntExact(scheduleId)]) {
+            // 先判断座位是否被占用
+            Boolean seatStatus = seatMapper.getStatusById(seatId);
+            // 空闲则修改为占用状态
+            if (!seatStatus) {
+                seatMapper.updateSeatStatusById(seatId, 1);
+            }
+            // 否则直接返回失败
+            else {
+                return CommonResult.operateFail("座位已占用， 请选择其他座位...");
+            }
+        }
 
         // 执行添加订单业务逻辑
         boolean success = orderGateWay.addOrder(userId, scheduleId, seatId);
-
         return success ? CommonResult.operateSuccess() : CommonResult.operateFail("下单失败， 请重试...");
     }
 }

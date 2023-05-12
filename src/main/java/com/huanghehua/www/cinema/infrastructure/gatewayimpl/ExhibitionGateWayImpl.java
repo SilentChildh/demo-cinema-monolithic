@@ -44,4 +44,11 @@ public class ExhibitionGateWayImpl implements ExhibitionGateWay {
         // 利用转换器进行类型转换, 并返回结果
         return FilmConvertor.poListToModel(films);
     }
+
+    @Override
+    public FilmModel getFilm(Long id) {
+        FilmPO filmPo = filmMapper.getFilmById(id);
+
+        return FilmConvertor.poToModel(filmPo);
+    }
 }

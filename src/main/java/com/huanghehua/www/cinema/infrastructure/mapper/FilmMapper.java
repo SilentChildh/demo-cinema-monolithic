@@ -43,4 +43,12 @@ public interface FilmMapper {
      * @return {@link Long}
      */
     Long countAllByName(@Param("name") String name);
+
+    /**
+     * 通过id获取电影信息
+     *
+     * @param id id
+     * @return {@link FilmPO}
+     */
+    FilmPO getFilmById(@Param("id") Long id);
 }

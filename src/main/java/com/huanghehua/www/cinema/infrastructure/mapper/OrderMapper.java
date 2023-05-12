@@ -1,5 +1,6 @@
 package com.huanghehua.www.cinema.infrastructure.mapper;
 
+import com.huanghehua.www.cinema.infrastructure.data.OrderPO;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Mapper;
 import com.huanghehua.www.orm.annotation.Param;
@@ -30,4 +31,11 @@ public interface OrderMapper {
                     @Param("seatId") Long seatId,
                     @Param("price")BigDecimal price);
 
+    /**
+     * 通过id获取订单信息
+     *
+     * @param id id
+     * @return {@link OrderPO}
+     */
+    OrderPO getOrderById(@Param("id") Long id);
 }

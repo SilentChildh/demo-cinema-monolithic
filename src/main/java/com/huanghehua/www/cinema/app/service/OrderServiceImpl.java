@@ -3,10 +3,13 @@ package com.huanghehua.www.cinema.app.service;
 import com.huanghehua.www.cinema.app.convertor.ScheduleConvertor;
 import com.huanghehua.www.cinema.app.convertor.SeatConvertor;
 import com.huanghehua.www.cinema.app.executor.command.OrderAddCmdExe;
+import com.huanghehua.www.cinema.app.executor.query.OrderGetQryExe;
 import com.huanghehua.www.cinema.client.api.OrderServiceI;
+import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.ScheduleDTO;
 import com.huanghehua.www.cinema.client.dto.SeatDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
+import com.huanghehua.www.cinema.client.dto.query.OrderGetQry;
 import com.huanghehua.www.cinema.infrastructure.data.SchedulePO;
 import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
 import com.huanghehua.www.cinema.infrastructure.mapper.ScheduleMapper;
@@ -31,6 +34,8 @@ public class OrderServiceImpl implements OrderServiceI {
 
     @Reference
     private OrderAddCmdExe orderAddCmdExe;
+    @Reference
+    private OrderGetQryExe orderGetQryExe;
     @Reference
     private ScheduleMapper scheduleMapper;
     @Reference
@@ -62,5 +67,10 @@ public class OrderServiceImpl implements OrderServiceI {
         // 利用转换器转换为dto模型
         List<SeatDTO> list = SeatConvertor.poListToDto(seatPoList);
         return CommonResult.operateSuccess(list);
+    }
+
+    @Override
+    public CommonResult<OrderDetailDTO> showOrderInfo(OrderGetQry orderGetQry) {
+        return orderGetQryExe.execute(orderGetQry);
     }
 }

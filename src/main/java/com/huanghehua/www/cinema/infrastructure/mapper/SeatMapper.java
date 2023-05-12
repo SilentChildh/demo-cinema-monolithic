@@ -31,4 +31,21 @@ public interface SeatMapper {
      */
     int updateSeatStatusById(@Param("id") Long id,
                              @Param("status") int status);
+
+    /**
+     * 通过id获取座位状态, 1为占用，0为空闲
+     *
+     * @param id id
+     * @return int
+     */
+    Boolean getStatusById(@Param("id") Long id);
+
+
+    /**
+     * 通过id获取座位信息
+     *
+     * @param id id
+     * @return {@link SeatPO}
+     */
+    SeatPO getSeatById(@Param("id") Long id);
 }

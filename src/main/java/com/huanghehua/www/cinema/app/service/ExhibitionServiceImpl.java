@@ -37,7 +37,7 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     private ExhibitionGateWay exhibitionGateWay;
 
     @Override
-    public CommonResult<?> showInfo(String name, PageAbility pageAbility) {
+    public CommonResult<List<FilmDTO>> showListPageInfo(String name, PageAbility pageAbility) {
         LOGGER.log(Level.INFO, "{0} invoke show() method", Thread.currentThread());
         // 验证参数
         VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ExhibitionServiceImpl.class,
@@ -54,7 +54,7 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     }
 
     @Override
-    public CommonResult<?> showInfo(String name) {
+    public CommonResult<List<FilmDTO>> showListInfo(String name) {
         // 验证参数
         VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ExhibitionServiceImpl.class,
                 "show",
@@ -67,5 +67,14 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
         // 数据结构转换
         List<FilmDTO> list = FilmConvertor.modelListToDto(filmModels);
         return CommonResult.operateSuccess(list);
+    }
+
+    @Override
+    public CommonResult<FilmDTO> getFilmInfo(Long filmId) {
+        FilmModel film = exhibitionGateWay.getFilm(filmId);
+
+        FilmDTO filmDTO = FilmConvertor.modelToDto(film);
+
+        return CommonResult.operateSuccess(filmDTO);
     }
 }

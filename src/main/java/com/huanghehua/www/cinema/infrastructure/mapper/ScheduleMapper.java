@@ -35,6 +35,14 @@ public interface ScheduleMapper {
     BigDecimal getPriceById(@Param("id") Long id);
 
     /**
+     * 通过id获取价格
+     *
+     * @param id id
+     * @return {@link BigDecimal}
+     */
+    Long getHallIdById(@Param("id") Long id);
+
+    /**
      * 通过id获取场次信息
      *
      * @param id id

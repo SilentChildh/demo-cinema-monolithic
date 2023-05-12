@@ -1,6 +1,8 @@
 package com.huanghehua.www.cinema.client.api;
 
+import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
+import com.huanghehua.www.cinema.client.dto.query.OrderGetQry;
 import com.huanghehua.www.common.CommonResult;
 
 /**
@@ -34,4 +36,12 @@ public interface OrderServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> showActiveSeat(Long scheduleId);
+
+    /**
+     * 显示订单信息
+     *
+     * @param orderGetQry 查询订单dto
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<OrderDetailDTO> showOrderInfo(OrderGetQry orderGetQry);
 }

@@ -44,7 +44,7 @@ public class ExhibitionController {
 
         PageAbility pageAbility = new PageAbility(maxPageSize, currentPageNumber);
 
-        return exhibitionService.showInfo(name, pageAbility);
+        return exhibitionService.showListPageInfo(name, pageAbility);
     }
 
     /**
