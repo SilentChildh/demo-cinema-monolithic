@@ -9,17 +9,17 @@ import java.util.Objects;
  * @version 1.0.0
  * @date 2023/05/12
  */
-public class OrderGetQry {
+public class OrderDetailGetQry {
     /**
      * 订单id
      */
     private Long id;
 
-    public OrderGetQry(Long id) {
+    public OrderDetailGetQry(Long id) {
         this.id = id;
     }
 
-    public OrderGetQry() {
+    public OrderDetailGetQry() {
     }
 
     @Override
@@ -37,7 +37,7 @@ public class OrderGetQry {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OrderGetQry that = (OrderGetQry) o;
+        OrderDetailGetQry that = (OrderDetailGetQry) o;
         return Objects.equals(id, that.id);
     }
 

@@ -70,40 +70,6 @@ public class OrderDetailDTO {
      */
     private Integer column;
 
-    public OrderDetailDTO(Long filmId, String filmName, String director, String actor, LocalDateTime releaseTime, LocalTime duration, String poster, Long hallId, BigDecimal price,
-                          LocalDateTime startTime, LocalDateTime endTime, Integer row, Integer column) {
-        this.filmId = filmId;
-        this.filmName = filmName;
-        this.director = director;
-        this.actor = actor;
-        this.releaseTime = releaseTime;
-        this.duration = duration;
-        this.poster = poster;
-        this.hallId = hallId;
-        this.price = price;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.row = row;
-        this.column = column;
-    }
-
-    public OrderDetailDTO(String filmName, String director, String actor,
-                          LocalDateTime releaseTime, LocalTime duration, String poster,
-                          Long hallId, BigDecimal price, LocalDateTime startTime,
-                          LocalDateTime endTime, Integer row, Integer column) {
-        this.filmName = filmName;
-        this.director = director;
-        this.actor = actor;
-        this.releaseTime = releaseTime;
-        this.duration = duration;
-        this.poster = poster;
-        this.hallId = hallId;
-        this.price = price;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.row = row;
-        this.column = column;
-    }
 
     public OrderDetailDTO(Long filmId, Long hallId, BigDecimal price, LocalDateTime startTime,
                           LocalDateTime endTime, Integer row, Integer column) {
@@ -116,14 +82,7 @@ public class OrderDetailDTO {
         this.column = column;
     }
 
-    public OrderDetailDTO(Long hallId, BigDecimal price, LocalDateTime startTime,
-                          LocalDateTime endTime, Integer row, Integer column) {
-        this.hallId = hallId;
-        this.price = price;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.row = row;
-        this.column = column;
+    public OrderDetailDTO() {
     }
 
     @Override

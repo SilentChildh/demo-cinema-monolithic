@@ -1,9 +1,13 @@
 package com.huanghehua.www.cinema.client.api;
 
 import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
+import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
-import com.huanghehua.www.cinema.client.dto.query.OrderGetQry;
+import com.huanghehua.www.cinema.client.dto.query.OrderDetailGetQry;
+import com.huanghehua.www.cinema.client.dto.query.HistoryOrderDetailListQry;
 import com.huanghehua.www.common.CommonResult;
+
+import java.util.List;
 
 /**
  * 订单服务接口
@@ -40,8 +44,16 @@ public interface OrderServiceI {
     /**
      * 显示订单信息
      *
-     * @param orderGetQry 查询订单dto
+     * @param orderDetailGetQry 查询订单dto
      * @return {@link CommonResult}<{@link ?}>
      */
-    CommonResult<OrderDetailDTO> showOrderInfo(OrderGetQry orderGetQry);
+    CommonResult<OrderDetailDTO> showOrderDetail(OrderDetailGetQry orderDetailGetQry);
+
+    /**
+     * 获取订单历史列表
+     *
+     * @param historyOrderDetailListQry 历史订单细节qry列表
+     * @return {@link CommonResult}<{@link List}<{@link HistoryOrderDetailDTO}>>
+     */
+    CommonResult<List<HistoryOrderDetailDTO>> showListOrderHistory(HistoryOrderDetailListQry historyOrderDetailListQry);
 }
