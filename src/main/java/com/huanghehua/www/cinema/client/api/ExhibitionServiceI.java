@@ -18,7 +18,7 @@ public interface ExhibitionServiceI {
      * @param pageAbility 页面能力
      * @return {@link CommonResult}<{@link ?}>
      */
-    CommonResult<?> show(String name, PageAbility pageAbility);
+    CommonResult<?> showInfo(String name, PageAbility pageAbility);
 
     /**
      * 显示影片信息
@@ -26,5 +26,5 @@ public interface ExhibitionServiceI {
      * @param name 名字
      * @return {@link CommonResult}<{@link ?}>
      */
-    CommonResult<?> show(String name);
+    CommonResult<?> showInfo(String name);
 }

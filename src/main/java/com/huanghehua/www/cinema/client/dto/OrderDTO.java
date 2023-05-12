@@ -1,6 +1,6 @@
 package com.huanghehua.www.cinema.client.dto;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -12,49 +12,46 @@ import java.util.Objects;
  */
 public class OrderDTO {
     /**
-     * 影片id
+     * id
      */
-    private Long filmId;
+    private Long id;
+
+    /**
+     * 用户id
+     */
+    private Long userId;
     /**
      * 场次id
      */
-    private Long sessionId;
+    private Long scheduleId;
     /**
      * 座位id
      */
     private Long seatId;
     /**
-     * 影片场次开始时间
+     * 价格
      */
-    private LocalDateTime startTime;
-    /**
-     * 影片场次结束时间
-     */
-    private LocalDateTime endTime;
-    /**
-     * 场次可容纳实际人数
-     */
-    private Integer capacity;
-    /**
-     * 座位状态
-     */
-    private Boolean status;
-
-    public OrderDTO(Long filmId, Long sessionId, Long seatId) {
-        this.filmId = filmId;
-        this.sessionId = sessionId;
-        this.seatId = seatId;
-    }
+    private BigDecimal price;
 
     public OrderDTO() {
     }
 
+    public OrderDTO(Long id, Long userId, Long scheduleId, Long seatId, BigDecimal price) {
+        this.id = id;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.seatId = seatId;
+        this.price = price;
+    }
+
     @Override
     public String toString() {
-        return "OrderVO{" +
-                "filmId=" + filmId +
-                ", sessionId=" + sessionId +
+        return "OrderDTO{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", scheduleId=" + scheduleId +
                 ", seatId=" + seatId +
+                ", price=" + price +
                 '}';
     }
 
@@ -67,28 +64,44 @@ public class OrderDTO {
             return false;
         }
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(filmId, orderDTO.filmId) && Objects.equals(sessionId, orderDTO.sessionId) && Objects.equals(seatId, orderDTO.seatId);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(scheduleId, orderDTO.scheduleId) && Objects.equals(seatId, orderDTO.seatId) && Objects.equals(price, orderDTO.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(filmId, sessionId, seatId);
+        return Objects.hash(id, userId, scheduleId, seatId, price);
     }
 
-    public Long getFilmId() {
-        return filmId;
+    public Long getId() {
+        return id;
     }
 
-    public void setFilmId(Long filmId) {
-        this.filmId = filmId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getSessionId() {
-        return sessionId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setSessionId(Long sessionId) {
-        this.sessionId = sessionId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(Long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Long getSeatId() {

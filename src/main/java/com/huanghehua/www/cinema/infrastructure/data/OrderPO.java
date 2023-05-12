@@ -1,5 +1,6 @@
 package com.huanghehua.www.cinema.infrastructure.data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,23 +16,24 @@ public class OrderPO {
      * id
      */
     private Long id;
-    /**
-     * 影片id
-     */
-    private Long filmId;
 
     /**
-     * 影片场次开始时间
+     * 用户id
      */
-    private LocalDateTime startTime;
+    private Long userId;
     /**
-     * 影片场次结束时间
+     * 场次id
      */
-    private LocalDateTime endTime;
+    private Long scheduleId;
     /**
-     * 场次可容纳实际人数
+     * 座位id
      */
-    private Integer capacity;
+    private Long seatId;
+    /**
+     * 价格
+     */
+    private BigDecimal price;
+
     /**
      * 创建时间
      */
@@ -41,16 +43,48 @@ public class OrderPO {
      */
     private LocalDateTime updateTime;
 
-    public OrderPO(Long id, Long filmId, LocalDateTime startTime,
-                   LocalDateTime endTime, Integer capacity) {
+    public OrderPO(Long id, Long userId, Long scheduleId) {
         this.id = id;
-        this.filmId = filmId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.capacity = capacity;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+    }
+
+    public OrderPO(Long id, Long userId, Long scheduleId, BigDecimal price) {
+        this.id = id;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.price = price;
+    }
+
+    public OrderPO(Long id, Long userId, Long scheduleId, Long seatId, BigDecimal price) {
+        this.id = id;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.seatId = seatId;
+        this.price = price;
+    }
+
+    public OrderPO(Long id, Long userId, Long scheduleId,
+                   LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     public OrderPO() {
+    }
+
+    public OrderPO(Long id, Long userId, Long scheduleId, Long seatId,
+                   BigDecimal price, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+        this.seatId = seatId;
+        this.price = price;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -62,22 +96,40 @@ public class OrderPO {
             return false;
         }
         OrderPO orderPO = (OrderPO) o;
-        return Objects.equals(id, orderPO.id) && Objects.equals(filmId, orderPO.filmId) && Objects.equals(startTime, orderPO.startTime) && Objects.equals(endTime, orderPO.endTime) && Objects.equals(capacity, orderPO.capacity);
+        return Objects.equals(id, orderPO.id) && Objects.equals(userId, orderPO.userId) && Objects.equals(scheduleId, orderPO.scheduleId) && Objects.equals(seatId, orderPO.seatId) && Objects.equals(price, orderPO.price) && Objects.equals(createTime, orderPO.createTime) && Objects.equals(updateTime, orderPO.updateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, filmId, startTime, endTime, capacity);
+        return Objects.hash(id, userId, scheduleId, seatId, price, createTime, updateTime);
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Long getSeatId() {
+        return seatId;
+    }
+
+    public void setSeatId(Long seatId) {
+        this.seatId = seatId;
     }
 
     @Override
     public String toString() {
         return "OrderPO{" +
                 "id=" + id +
-                ", filmId=" + filmId +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", capacity=" + capacity +
+                ", userId=" + userId +
+                ", scheduleId=" + scheduleId +
+                ", seatId=" + seatId +
+                ", price=" + price +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 
@@ -89,35 +141,35 @@ public class OrderPO {
         this.id = id;
     }
 
-    public Long getFilmId() {
-        return filmId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setFilmId(Long filmId) {
-        this.filmId = filmId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public Long getScheduleId() {
+        return scheduleId;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setScheduleId(Long scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }

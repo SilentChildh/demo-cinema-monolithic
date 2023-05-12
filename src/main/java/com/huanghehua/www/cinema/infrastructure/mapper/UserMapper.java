@@ -30,6 +30,6 @@ public interface UserMapper {
      * @param password 密码
      * @return {@link UserPO}
      */
-    UserPO selectSingleUserByEmail(@Param("email") String email, @Param("password") String password);
+    UserPO getUserByEmail(@Param("email") String email, @Param("password") String password);
 
 }

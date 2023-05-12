@@ -16,13 +16,18 @@ public class SeatPO {
      */
     private Long id;
     /**
-     * 影片id
+     * 影厅id, 唯一id
      */
-    private Long filmId;
+    private Long hallId;
     /**
-     * 场次id
+     * 行号
      */
-    private Long sessionId;
+    private Integer row;
+    /**
+     * 列号
+     */
+    private Integer column;
+
     /**
      * 座位状态，true为被占用，false未被占用
      */
@@ -36,27 +41,12 @@ public class SeatPO {
      */
     private LocalDateTime updateTime;
 
-
-    public SeatPO(Long id, Long filmId, Long sessionId, Boolean status) {
+    public SeatPO(Long id, Long hallId, Integer row, Integer column, Boolean status) {
         this.id = id;
-        this.filmId = filmId;
-        this.sessionId = sessionId;
+        this.hallId = hallId;
+        this.row = row;
+        this.column = column;
         this.status = status;
-    }
-
-    public SeatPO() {
-    }
-
-    @Override
-    public String toString() {
-        return "SeatPO{" +
-                "id=" + id +
-                ", filmId=" + filmId +
-                ", sessionId=" + sessionId +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
     }
 
     @Override
@@ -68,28 +58,52 @@ public class SeatPO {
             return false;
         }
         SeatPO seatPO = (SeatPO) o;
-        return Objects.equals(id, seatPO.id) && Objects.equals(filmId, seatPO.filmId) && Objects.equals(sessionId, seatPO.sessionId) && Objects.equals(status, seatPO.status) && Objects.equals(createTime, seatPO.createTime) && Objects.equals(updateTime, seatPO.updateTime);
+        return Objects.equals(id, seatPO.id) && Objects.equals(hallId, seatPO.hallId) && Objects.equals(row, seatPO.row) && Objects.equals(column, seatPO.column) && Objects.equals(status, seatPO.status) && Objects.equals(createTime, seatPO.createTime) && Objects.equals(updateTime, seatPO.updateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, filmId, sessionId, status, createTime, updateTime);
+        return Objects.hash(id, hallId, row, column, status, createTime, updateTime);
     }
 
-    public Long getFilmId() {
-        return filmId;
+    @Override
+    public String toString() {
+        return "SeatPO{" +
+                "id=" + id +
+                ", hallId=" + hallId +
+                ", row=" + row +
+                ", column=" + column +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 
-    public void setFilmId(Long filmId) {
-        this.filmId = filmId;
+    public SeatPO() {
     }
 
-    public Long getSessionId() {
-        return sessionId;
+    public Long getHallId() {
+        return hallId;
     }
 
-    public void setSessionId(Long sessionId) {
-        this.sessionId = sessionId;
+    public void setHallId(Long hallId) {
+        this.hallId = hallId;
+    }
+
+    public Integer getRow() {
+        return row;
+    }
+
+    public void setRow(Integer row) {
+        this.row = row;
+    }
+
+    public Integer getColumn() {
+        return column;
+    }
+
+    public void setColumn(Integer column) {
+        this.column = column;
     }
 
     public Boolean getStatus() {

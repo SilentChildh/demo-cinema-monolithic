@@ -1,14 +1,8 @@
 package com.huanghehua.www.cinema.domain.exhibition;
 
-import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
-import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ExhibitionGateWayImpl;
-import com.huanghehua.www.ioc.annotation.Bean;
-import com.huanghehua.www.ioc.annotation.Reference;
-import com.huanghehua.www.common.PageAbility;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * 电影模型
@@ -17,8 +11,11 @@ import java.util.List;
  * @version 1.0.0
  * @date 2023/05/07
  */
-@Bean
 public class FilmModel {
+    /**
+     * id
+     */
+    private Long id;
     /**
      * 影片名称，普通索引
      */
@@ -44,6 +41,17 @@ public class FilmModel {
      */
     private String poster;
 
+    public FilmModel(Long id, String name, String director, String actor,
+                     LocalDateTime releaseTime, LocalTime duration, String poster) {
+        this.id = id;
+        this.name = name;
+        this.director = director;
+        this.actor = actor;
+        this.releaseTime = releaseTime;
+        this.duration = duration;
+        this.poster = poster;
+    }
+
     public FilmModel(String name, String director, String actor,
                      LocalDateTime releaseTime, LocalTime duration,
                      String poster) {
@@ -58,15 +66,42 @@ public class FilmModel {
     public FilmModel() {
     }
 
-    // TODO 造成依赖了吗？
-    @Reference(ExhibitionGateWayImpl.class)
-    private ExhibitionGateWay exhibitionGateWay;
-
-    public List<FilmModel> getFilm(String name, PageAbility pageAbility) {
-        return exhibitionGateWay.listPageFilm(name, pageAbility);
+    @Override
+    public String toString() {
+        return "FilmModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", director='" + director + '\'' +
+                ", actor='" + actor + '\'' +
+                ", releaseTime=" + releaseTime +
+                ", duration=" + duration +
+                ", poster='" + poster + '\'' +
+                '}';
     }
-    public List<FilmModel> getFilm(String name) {
-        return exhibitionGateWay.listFilm(name);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FilmModel filmModel = (FilmModel) o;
+        return Objects.equals(id, filmModel.id) && Objects.equals(name, filmModel.name) && Objects.equals(director, filmModel.director) && Objects.equals(actor, filmModel.actor) && Objects.equals(releaseTime, filmModel.releaseTime) && Objects.equals(duration, filmModel.duration) && Objects.equals(poster, filmModel.poster);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, director, actor, releaseTime, duration, poster);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -115,13 +150,5 @@ public class FilmModel {
 
     public void setPoster(String poster) {
         this.poster = poster;
-    }
-
-    public ExhibitionGateWay getShowGateWay() {
-        return exhibitionGateWay;
-    }
-
-    public void setShowGateWay(ExhibitionGateWay exhibitionGateWay) {
-        this.exhibitionGateWay = exhibitionGateWay;
     }
 }

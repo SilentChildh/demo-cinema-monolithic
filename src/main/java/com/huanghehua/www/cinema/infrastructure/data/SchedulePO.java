@@ -1,5 +1,6 @@
 package com.huanghehua.www.cinema.infrastructure.data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @version 1.0.0
  * @date 2023/05/07
  */
-public class SessionPO {
+public class SchedulePO {
     /**
      * id
      */
@@ -19,6 +20,14 @@ public class SessionPO {
      * 影片id
      */
     private Long filmId;
+    /**
+     * 影厅id
+     */
+    private Long hallId;
+    /**
+     * 价格
+     */
+    private BigDecimal price;
 
     /**
      * 影片场次开始时间
@@ -28,10 +37,7 @@ public class SessionPO {
      * 影片场次结束时间
      */
     private LocalDateTime endTime;
-    /**
-     * 场次可容纳实际人数
-     */
-    private Integer capacity;
+
     /**
      * 创建时间
      */
@@ -41,19 +47,27 @@ public class SessionPO {
      */
     private LocalDateTime updateTime;
 
-    public SessionPO(Long id, Long filmId, LocalDateTime startTime, LocalDateTime endTime, Integer capacity,
-                     LocalDateTime createTime, LocalDateTime updateTime) {
+    public SchedulePO(Long id, Long filmId, LocalDateTime startTime,
+                      LocalDateTime endTime, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
         this.filmId = filmId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.capacity = capacity;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
 
+    public SchedulePO(Long id, Long filmId, Long hallId, BigDecimal price,
+                      LocalDateTime startTime, LocalDateTime endTime) {
+        this.id = id;
+        this.filmId = filmId;
+        this.hallId = hallId;
+        this.price = price;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
-    public SessionPO() {
+    public SchedulePO() {
     }
 
     @Override
@@ -64,30 +78,47 @@ public class SessionPO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SessionPO sessionPO = (SessionPO) o;
-        return Objects.equals(id, sessionPO.id) && Objects.equals(filmId, sessionPO.filmId) && Objects.equals(startTime, sessionPO.startTime) && Objects.equals(endTime, sessionPO.endTime) && Objects.equals(capacity, sessionPO.capacity) && Objects.equals(createTime, sessionPO.createTime) && Objects.equals(updateTime, sessionPO.updateTime);
+        SchedulePO that = (SchedulePO) o;
+        return Objects.equals(id, that.id) && Objects.equals(filmId, that.filmId) && Objects.equals(hallId, that.hallId) && Objects.equals(price, that.price) && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && Objects.equals(createTime, that.createTime) && Objects.equals(updateTime, that.updateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, filmId, startTime, endTime, capacity, createTime, updateTime);
+        return Objects.hash(id, filmId, hallId, price, startTime, endTime, createTime, updateTime);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-        return "SessionPO{" +
+        return "SchedulePO{" +
                 "id=" + id +
                 ", filmId=" + filmId +
+                ", hallId=" + hallId +
+                ", price=" + price +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", capacity=" + capacity +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
     }
 
-    public Long getId() {
-        return id;
+    public Long getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(Long hallId) {
+        this.hallId = hallId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public void setId(Long id) {
@@ -116,14 +147,6 @@ public class SessionPO {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
     }
 
     public LocalDateTime getCreateTime() {

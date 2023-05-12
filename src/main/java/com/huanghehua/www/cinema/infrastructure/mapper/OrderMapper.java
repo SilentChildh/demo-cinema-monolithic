@@ -2,6 +2,9 @@ package com.huanghehua.www.cinema.infrastructure.mapper;
 
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Mapper;
+import com.huanghehua.www.orm.annotation.Param;
+
+import java.math.BigDecimal;
 
 /**
  * 顺序映射器
@@ -16,8 +19,15 @@ public interface OrderMapper {
     /**
      * 插入订单
      *
+     * @param userId     用户id
+     * @param scheduleId 安排id
+     * @param price      价格
+     * @param seatId     座位id
      * @return int
      */
-    int insertOrder();
+    int insertOrder(@Param("userId") Long userId,
+                    @Param("scheduleId") Long scheduleId,
+                    @Param("seatId") Long seatId,
+                    @Param("price")BigDecimal price);
 
 }

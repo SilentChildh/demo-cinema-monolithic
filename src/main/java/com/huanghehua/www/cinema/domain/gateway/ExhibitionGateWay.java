@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author timeboy
  * @version 1.0.0
- * @date 2023/05/07
+ * @date 2023/05/11
  */
 public interface ExhibitionGateWay {
     /**
@@ -30,4 +30,5 @@ public interface ExhibitionGateWay {
      * @return {@link List}<{@link FilmModel}>
      */
     List<FilmModel> listFilm(String name);
+
 }

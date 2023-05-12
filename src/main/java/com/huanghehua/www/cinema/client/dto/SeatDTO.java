@@ -1,8 +1,6 @@
 package com.huanghehua.www.cinema.client.dto;
 
-import com.huanghehua.www.annotation.Api;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -10,44 +8,40 @@ import java.util.Objects;
  *
  * @author timeboy
  * @version 1.0.0
- * @date 2023/05/07
+ * @date 2023/05/12
  */
 public class SeatDTO {
-    @Api
-    private FilmDTO filmDto;
     /**
-     * 影片场次开始时间
+     * id
      */
-    private LocalDateTime startTime;
+    private Long id;
     /**
-     * 影片场次结束时间
+     * 影厅id
      */
-    private LocalDateTime endTime;
+    private Long hallId;
     /**
-     * 场次可容纳实际人数
+     * 行号
      */
-    private Integer capacity;
+    private Integer row;
+    /**
+     * 列号
+     */
+    private Integer column;
 
-    public SeatDTO(FilmDTO filmDto,
-                   LocalDateTime startTime,
-                   LocalDateTime endTime, Integer capacity) {
-        this.filmDto = filmDto;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.capacity = capacity;
-    }
+    /**
+     * 座位状态，true为被占用，false未被占用
+     */
+    private Boolean status;
 
     public SeatDTO() {
     }
 
-    @Override
-    public String toString() {
-        return "SeatDTO{" +
-                "filmDto=" + filmDto +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", capacity=" + capacity +
-                '}';
+    public SeatDTO(Long id, Long hallId, Integer row, Integer column, Boolean status) {
+        this.id = id;
+        this.hallId = hallId;
+        this.row = row;
+        this.column = column;
+        this.status = status;
     }
 
     @Override
@@ -59,43 +53,62 @@ public class SeatDTO {
             return false;
         }
         SeatDTO seatDTO = (SeatDTO) o;
-        return Objects.equals(filmDto, seatDTO.filmDto) && Objects.equals(startTime, seatDTO.startTime) && Objects.equals(endTime, seatDTO.endTime) && Objects.equals(capacity, seatDTO.capacity);
+        return Objects.equals(id, seatDTO.id) && Objects.equals(hallId, seatDTO.hallId) && Objects.equals(row, seatDTO.row) && Objects.equals(column, seatDTO.column) && Objects.equals(status, seatDTO.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(filmDto, startTime, endTime, capacity);
+        return Objects.hash(id, hallId, row, column, status);
     }
 
-    public FilmDTO getFilmDto() {
-        return filmDto;
+    @Override
+    public String toString() {
+        return "SeatDTO{" +
+                "id=" + id +
+                ", hallId=" + hallId +
+                ", row=" + row +
+                ", column=" + column +
+                ", status=" + status +
+                '}';
     }
 
-    public void setFilmDto(FilmDTO filmDto) {
-        this.filmDto = filmDto;
+    public Long getId() {
+        return id;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public Long getHallId() {
+        return hallId;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public void setHallId(Long hallId) {
+        this.hallId = hallId;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public Integer getRow() {
+        return row;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public void setRow(Integer row) {
+        this.row = row;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public Integer getColumn() {
+        return column;
+    }
+
+    public void setColumn(Integer column) {
+        this.column = column;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

@@ -25,7 +25,7 @@ public class AuthenticationGateWayImpl implements AuthenticationGateWay {
 
     @Override
     public boolean doLogin(String email, String password) {
-        UserPO userPo = userMapper.selectSingleUserByEmail(email, password);
+        UserPO userPo = userMapper.getUserByEmail(email, password);
 
         return userPo != null;
     }

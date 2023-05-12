@@ -25,9 +25,9 @@ public interface FilmMapper {
      * @param currentPageSize 当前页面大小
      * @return {@link List}<{@link FilmPO}>
      */
-    List<FilmPO> selectListByNameWithPage(@Param("name") String name,
-                                          @Param("fromIndex") Integer fromIndex,
-                                          @Param("currentPageSize") Integer currentPageSize);
+    List<FilmPO> listPageByName(@Param("name") String name,
+                                @Param("fromIndex") Integer fromIndex,
+                                @Param("currentPageSize") Integer currentPageSize);
 
     /**
      * 根据影片名称获取影片信息
@@ -35,12 +35,12 @@ public interface FilmMapper {
      * @param name 名字
      * @return {@link List}<{@link FilmPO}>
      */
-    List<FilmPO> selectListByName(@Param("name") String name);
+    List<FilmPO> listByName(@Param("name") String name);
     /**
      * 根据影片名称获取该影片的数量
      *
      * @param name 名字
      * @return {@link Long}
      */
-    Long selectCountByName(@Param("name") String name);
+    Long countAllByName(@Param("name") String name);
 }

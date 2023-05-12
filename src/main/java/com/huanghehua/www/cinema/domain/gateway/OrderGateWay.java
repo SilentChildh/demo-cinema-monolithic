@@ -1,9 +1,5 @@
 package com.huanghehua.www.cinema.domain.gateway;
 
-import com.huanghehua.www.cinema.domain.order.model.SessionModel;
-
-import java.util.List;
-
 /**
  * 订单网关
  *
@@ -13,17 +9,12 @@ import java.util.List;
  */
 public interface OrderGateWay {
     /**
-     * 执行订票
+     * 添加订单
      *
+     * @param userId     用户id
+     * @param scheduleId 安排id
+     * @param seatId     座位id
      * @return boolean
      */
-    boolean doOrder();
-
-    /**
-     * 根据电影id获取场次信息
-     *
-     * @param filmId 影片id
-     * @return {@link List}<{@link SessionModel}>
-     */
-    List<SessionModel> listSessions(Long filmId);
+    boolean addOrder(Long userId, Long scheduleId, Long seatId);
 }
