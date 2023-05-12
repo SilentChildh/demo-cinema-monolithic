@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>影院主页</title>
+    <script src="vue.js"></script>
+    <script src="axios.js"></script>
+</head>
+
+<body>
+<span id="app">
+    <login></login>
+    <filminfo></filminfo>
+
+    <schedulelist></schedulelist>
+    <seatlist></seatlist>
+
+    <order></order>
+    <customerorderdetail></customerorderdetail>
+
+</span>
+
+<script>
+    const login = Vue.extend({
+        template: `
+          <button @click.self="redirect()">跳转个人主页</button>
+        `,
+        methods: {
+            redirect() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                window.location.href = "/frontend/personal.html?id=" + urlSearchParams.get("id");
+            }
+        }
+    })
+    const filminfo = Vue.extend({
+        template: `
+          <fieldset>
+          <legend>影片信息</legend>
+          <input type="text" placeholder="请输入影片名称" v-model.trim="name"/><br>
+          <button @click.self="select()">开始搜索</button><br>
+          <table>
+            <thead>
+            <tr>
+              <th>影片id</th>
+              <th>影片名称</th>
+              <th>导演</th>
+              <th>主演</th>
+              <th>发布时间</th>
+              <th>影片持续时间</th>
+              <th>海报</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="res in commonResults" :key="res.id">
+              <td>{{ res.id }}</td>
+              <td>{{ res.name }}</td>
+              <td>{{ res.director }}</td>
+              <td>{{ res.actor }}</td>
+              <td>{{ res.releaseTime }}</td>
+              <td>{{ res.duration }}</td>
+              <td><img :src="res.poster" alt="未找到海报"/></td>
+            </tr>
+            </tbody>
+          </table>
+          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
+          <button @click.self="select()">跳转</button>
+          <br>
+          </fieldset>
+        `,
+        data() {
+            return {
+                name,
+                httpCode: 200,
+                errorCode: "00000",
+                errorMessage: "",
+                tipMessage: "",
+                commonResults: [
+                    {
+                        // 影片id
+                        id : "-",
+                        // 影片名称
+                        name: '-',
+                        // 导演
+                        director: '-',
+                        // 主演
+                        actor: '-',
+                        // 发布日期、时间
+                        releaseTime: '-',
+                        // 影片持续时间
+                        duration: '-',
+                        // 海报存储于数据库服务器的绝对路径
+                        poster: '-'
+                    }
+                ],
+                page: {
+                    // 页面承载的最大记录条数
+                    maxPageSize: 1,
+                    // 当前页码
+                    currentPageNumber: 1,
+                },
+            }
+        },
+        methods: {
+            select() {
+                axios.get('http://localhost:8080/api/exhibition/info', {
+                    params: {
+                        name: this.name,
+                        maxPageSize: this.page.maxPageSize,
+                        currentPageNumber: this.page.currentPageNumber
+                    }
+                })
+                    .then(response => {
+                        this.commonResults = response.data.data;
+
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+
+            }
+        }
+    })
+
+    const schedulelist = Vue.extend({
+        template: `
+          <fieldset>
+          <legend>影片场次</legend>
+          <input type="number" placeholder="请输入影片id" v-model.number="filmId"/><br>
+          <button @click.self="select()">开始搜索</button><br>
+          <table>
+            <thead>
+            <tr>
+              <th>场次id</th>
+              <th>影片id</th>
+              <th>影厅id</th>
+              <th>价格</th>
+              <th>影片场次开始时间</th>
+              <th>影片场次结束时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="res in commonResults" :key="res.id">
+              <td>{{ res.id }}</td>
+              <td>{{ res.filmId }}</td>
+              <td>{{ res.hallId }}</td>
+              <td>{{ res.price }}</td>
+              <td>{{ res.startTime }}</td>
+              <td>{{ res.endTime }}</td>
+            </tr>
+            </tbody>
+          </table>
+          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
+          <button @click.self="select()">跳转</button>
+          <br>
+          </fieldset>
+        `,
+        data() {
+            return {
+                filmId: "-",
+                httpCode: 200,
+                errorCode: "00000",
+                errorMessage: "",
+                tipMessage: "",
+                commonResults: [
+                    {
+                        // 场次id
+                        id : "-",
+                        // 影片id
+                        filmId: '-',
+                        // 影厅id
+                        hallId: '-',
+                        // 价格
+                        price: '-',
+                        // 影片场次开始时间
+                        startTime: '-',
+                        // 影片场次结束时间
+                        endTime: '-',
+                    }
+                ],
+                page: {
+                    // 页面承载的最大记录条数
+                    maxPageSize: 1,
+                    // 当前页码
+                    currentPageNumber: 1,
+                },
+            }
+        },
+        methods: {
+            select() {
+                axios.get('http://localhost:8080/api/exhibition/schedule', {
+                    params: {
+                        filmId: this.filmId,
+                        maxPageSize: this.page.maxPageSize,
+                        currentPageNumber: this.page.currentPageNumber
+                    }
+                })
+                    .then(response => {
+                        this.commonResults = response.data.data;
+
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+
+            }
+        }
+    })
+
+    const seatlist = Vue.extend({
+        template: `
+          <fieldset>
+          <legend>场次可用座位表</legend>
+          <input type="number" placeholder="请输入场次id" v-model.number="scheduleId"/><br>
+          <button @click.self="select()">开始搜索</button><br>
+          <table>
+            <thead>
+            <tr>
+              <th>座位id</th>
+              <th>影厅id</th>
+              <th>行号</th>
+              <th>列号</th>
+              <th>座位状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="res in commonResults" :key="res.id">
+              <td>{{ res.id }}</td>
+              <td>{{ res.hallId }}</td>
+              <td>{{ res.row }}</td>
+              <td>{{ res.column }}</td>
+              <td>{{ res.status }}</td>
+            </tr>
+            </tbody>
+          </table>
+          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
+          <button @click.self="select()">跳转</button>
+          <br>
+          </fieldset>
+        `,
+        data() {
+            return {
+                scheduleId: "-",
+                httpCode: 200,
+                errorCode: "00000",
+                errorMessage: "",
+                tipMessage: "",
+                commonResults: [
+                    {
+                        // 座位id
+                        id : "-",
+                        // 影厅id
+                        hallId: '-',
+                        // 行号
+                        row: '-',
+                        // 列号
+                        column: '-',
+                        // 座位状态，true为被占用，false未被占用
+                        status: '-',
+                    }
+                ],
+                page: {
+                    // 页面承载的最大记录条数
+                    maxPageSize: 1,
+                    // 当前页码
+                    currentPageNumber: 1,
+                },
+            }
+        },
+        methods: {
+            select() {
+                axios.get('http://localhost:8080/api/exhibition/seat', {
+                    params: {
+                        scheduleId: this.scheduleId,
+                        maxPageSize: this.page.maxPageSize,
+                        currentPageNumber: this.page.currentPageNumber
+                    }
+                })
+                    .then(response => {
+                        this.commonResults = response.data.data;
+
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+
+            }
+        }
+    })
+
+    const order = Vue.extend({
+        template: `
+          <fieldset>
+          <legend>订票</legend>
+          <input type="number" placeholder="请输入场次id" v-model.number="scheduleId"/><br>
+          <input type="number" placeholder="请输入座位id" v-model.number="seatId"/><br>
+          <button @click.self="order()">确认下单</button><br>
+          </fieldset>
+        `,
+        data() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return {
+                userId : urlSearchParams.get("id"),
+                scheduleId: "-",
+                seatId : "-",
+                httpCode: 200,
+                errorCode: "00000",
+                errorMessage: "",
+                tipMessage: "",
+            }
+        },
+        methods: {
+            order() {
+                axios.post('http://localhost:8080/api/reservation/order', {
+                    userId: this.userId,
+                    scheduleId: this.scheduleId,
+                    seatId: this.seatId,
+                })
+                    .then(response => {
+                        this.commonResults = response.data.data;
+
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+
+            }
+        }
+    })
+
+    const customerorderdetail = Vue.extend({
+        template: `
+          <fieldset>
+          <legend>订单详情</legend>
+          <input type="number" placeholder="请输入需要查看的订单id" v-model.number="orderId"/><br>
+          <ul>
+            <li v-for="res in commonResults">
+              {{ '影片名称 : ' + res.filmId }}<br>
+              {{ '导演 : ' + res.director }}<br>
+              {{ '主演 : ' + res.actor }}<br>
+              {{ '发布日期、时间 : ' + res.releaseTime }}<br>
+              {{ '影片持续时间 : ' + res.duration }}<br>
+
+              {{ '影厅id : ' + res.hallId }}<br>
+              {{ '价格 : ' + res.price }}<br>
+              {{ '影片场次开始时间 : ' + res.startTime }}<br>
+              {{ '影片场次结束时间 : ' + res.endTime }}<br>
+
+              {{ '行号 : ' + res.row }}<br>
+              {{ '列号 : ' + res.column }}<br>
+            </li>
+          </ul>
+          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
+          <button @click.self="flush">跳转查看</button><br/>
+          </fieldset>
+        `,
+        data() {
+            return {
+                // 订单id
+                orderId : "-",
+                commonResults: [
+                    {
+                        // 影片id
+                        filmId : "-",
+                        // 影片名称
+                        filmName : "-",
+                        // 导演
+                        director : "-",
+                        // 主演
+                        actor : "-",
+                        // 发布日期、时间
+                        releaseTime : "-",
+                        // 影片持续时间
+                        duration : "-",
+                        // 海报存储于数据库服务器的绝对路径
+                        poster : "-",
+
+
+                        // 影厅id
+                        hallId : "-",
+                        // 价格
+                        price : "-",
+                        // 影片场次开始时间
+                        startTime : "-",
+                        // 影片场次结束时间
+                        endTime : "-",
+
+
+                        // 行号
+                        row : "-",
+                        // 列号
+                        column : "-",
+                    },
+                ],
+                page: {
+                    // 页面承载的最大记录条数
+                    maxPageSize: 5,
+                    // 当前页码
+                    currentPageNumber: 1,
+                }
+            }
+        },
+        methods: {
+            flush() {
+                axios.get('http://localhost:8080/api/reservation/info', {
+                    params: {
+                        orderId : this.orderId,
+                        maxPageSize: this.page.maxPageSize,
+                        currentPageNumber: this.page.currentPageNumber
+                    }
+                })
+                    .then(response => {
+                        this.commonResults = response.data.data;
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            }
+
+        }
+    })
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            filminfo, login, schedulelist,
+            seatlist, order, customerorderdetail
+
+        },
+    })
+</script>
+</body>
+</html>

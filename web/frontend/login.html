@@ -38,7 +38,7 @@
                 })
                     .then(response => {
                         const commonResult = response.data;
-                        window.location.href = "/frontend/homepage.html";
+                        window.location.href = "/frontend/homepage.html?id=" + commonResult.data.id;
                         alert(commonResult.tipMessage + "我在这success");
                     })
                     .catch(error => {
@@ -74,7 +74,7 @@
         },
         methods: {
             register() {
-                axios.post('http://localhost:8080/www.huanghehua.com/api/authentication/register', {
+                axios.post('http://localhost:8080/api/authentication/register', {
                     email : this.email,
                     password : this.password,
                     status: true
