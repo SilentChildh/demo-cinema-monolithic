@@ -61,7 +61,14 @@ public class CommonResult<T>{
         this.tipMessage = tipMessage;
     }
 
-
+    /**
+     * 操作成功，返回空对象
+     *
+     * @return {@link CommonResult}<{@link Object}>
+     */
+    public static CommonResult<Object> operateSuccess() {
+        return new CommonResult<>(new Object(), State.SUCCESS, "操作成功");
+    }
     /**
      * 操作成功，需要返回数据对象
      *
