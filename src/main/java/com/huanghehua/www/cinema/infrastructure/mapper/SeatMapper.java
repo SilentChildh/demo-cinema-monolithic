@@ -1,6 +1,8 @@
 package com.huanghehua.www.cinema.infrastructure.mapper;
 
 import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
+import com.huanghehua.www.ioc.annotation.Bean;
+import com.huanghehua.www.ioc.annotation.Mapper;
 import com.huanghehua.www.orm.annotation.Param;
 
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
  * @version 1.0.0
  * @date 2023/05/12
  */
+@Bean
+@Mapper
 public interface SeatMapper {
 
     /**
