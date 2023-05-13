@@ -66,7 +66,7 @@ public class CommonResult<T>{
      *
      * @return {@link CommonResult}<{@link Object}>
      */
-    public static CommonResult<Object> operateSuccess() {
+    public static <T> CommonResult<T> operateSuccess() {
         return new CommonResult<>(State.SUCCESS, "操作成功");
     }
     /**
@@ -86,7 +86,7 @@ public class CommonResult<T>{
      * @param tipMessage 提示消息
      * @return {@link CommonResult}<{@link Object}>
      */
-    public static CommonResult<Object> operateFail(String tipMessage) {
+    public static <T> CommonResult<T> operateFail(String tipMessage) {
         return new CommonResult<>(State.CLIENT_ERROR, tipMessage);
     }
 
