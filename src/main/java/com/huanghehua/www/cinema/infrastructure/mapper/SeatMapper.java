@@ -52,4 +52,12 @@ public interface SeatMapper {
      * @return {@link SeatPO}
      */
     SeatPO getSeatById(@Param("id") Long id);
+
+    /**
+     * 在影厅中添加座位
+     *
+     * @param seatPo 座位阿宝
+     * @return int
+     */
+    int insertSeat(SeatPO seatPo);
 }

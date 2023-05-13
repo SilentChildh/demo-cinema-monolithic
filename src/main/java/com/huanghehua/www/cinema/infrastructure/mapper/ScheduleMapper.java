@@ -49,4 +49,20 @@ public interface ScheduleMapper {
      * @return {@link SchedulePO}
      */
     SchedulePO getScheduleById(@Param("id") Long id);
+
+    /**
+     * 插入电影场次安排
+     *
+     * @param schedulePo 安排订单
+     * @return int
+     */
+    int insertSchedule(SchedulePO schedulePo);
+
+    /**
+     * 根据电影场次id 物理删除电影场次
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteScheduleById(@Param("id") Long id);
 }

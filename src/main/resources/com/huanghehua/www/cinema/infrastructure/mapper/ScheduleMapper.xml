@@ -23,4 +23,16 @@
         where id = #{id}
     </select>
 
+    <insert id="insertSchedule">
+        insert into schedule
+        (filmId, hallId, price, startTime, endTime)
+        values
+        (#{filmId}, #{hallId}, #{price}, #{startTime}, #{endTime})
+    </insert>
+
+    <delete id="deleteScheduleById">
+        delete from schedule
+        where id = #{id}
+    </delete>
+
 </mapper>

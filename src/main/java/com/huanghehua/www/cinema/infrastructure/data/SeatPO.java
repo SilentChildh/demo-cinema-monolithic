@@ -49,6 +49,12 @@ public class SeatPO {
         this.status = status;
     }
 
+    public SeatPO(Long hallId, Integer row, Integer column) {
+        this.hallId = hallId;
+        this.row = row;
+        this.column = column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -1,7 +1,10 @@
 package com.huanghehua.www.cinema.app.convertor;
 
 import com.huanghehua.www.cinema.client.dto.ScheduleDTO;
+import com.huanghehua.www.cinema.client.dto.command.ScheduleAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.SeatAddCmd;
 import com.huanghehua.www.cinema.infrastructure.data.SchedulePO;
+import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -49,5 +52,20 @@ public class ScheduleConvertor {
             list.add(scheduleDTO);
         }
         return list;
+    }
+
+    /**
+     * ScheduleAddCmd类型的dto模型转化为数据库持久化数据模型
+     *
+     * @param scheduleAddCmd 计划添加cmd
+     * @return {@link SchedulePO}
+     */
+    public static SchedulePO dtoToPo(ScheduleAddCmd scheduleAddCmd) {
+        return new SchedulePO(
+                scheduleAddCmd.getFilmId(),
+                scheduleAddCmd.getHallId(),
+                scheduleAddCmd.getPrice(),
+                scheduleAddCmd.getStartTime(),
+                scheduleAddCmd.getEndTime());
     }
 }

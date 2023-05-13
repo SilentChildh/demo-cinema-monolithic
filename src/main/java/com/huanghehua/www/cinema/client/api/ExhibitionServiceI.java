@@ -1,8 +1,7 @@
 package com.huanghehua.www.cinema.client.api;
 
 import com.huanghehua.www.cinema.client.dto.FilmDTO;
-import com.huanghehua.www.cinema.client.dto.command.FilmAddCmd;
-import com.huanghehua.www.cinema.client.dto.command.FilmRemoveCmd;
+import com.huanghehua.www.cinema.client.dto.command.*;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.common.PageAbility;
 
@@ -64,4 +63,30 @@ public interface ExhibitionServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd);
+
+    /**
+     * 添加电影场次安排
+     *
+     * @param scheduleAddCmd 计划添加cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> addSchedule(ScheduleAddCmd scheduleAddCmd);
+
+    /**
+     * 删除电影场次
+     *
+     * @param scheduleRemoveCmd 安排删除cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> removeSchedule(ScheduleRemoveCmd scheduleRemoveCmd);
+
+    /**
+     * 添加影厅座位安排
+     *
+     * @param seatAddCmd 座位添加cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> addSeat(SeatAddCmd seatAddCmd);
+
+
 }

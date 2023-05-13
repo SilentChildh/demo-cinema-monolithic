@@ -47,19 +47,9 @@ public class SchedulePO {
      */
     private LocalDateTime updateTime;
 
-    public SchedulePO(Long id, Long filmId, LocalDateTime startTime,
-                      LocalDateTime endTime, LocalDateTime createTime, LocalDateTime updateTime) {
-        this.id = id;
-        this.filmId = filmId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public SchedulePO(Long id, Long filmId, Long hallId, BigDecimal price,
-                      LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = id;
+    public SchedulePO(Long filmId, Long hallId,
+                      BigDecimal price, LocalDateTime startTime,
+                      LocalDateTime endTime) {
         this.filmId = filmId;
         this.hallId = hallId;
         this.price = price;

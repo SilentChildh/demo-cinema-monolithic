@@ -23,4 +23,11 @@
         select * from seat
         where id = #{id};
     </select>
+
+    <insert id="insertSeat">
+        insert into seat
+        (hallId, row, column, status)
+        values
+        (#{hallId}, #{row}, #{column}, 0)
+    </insert>
 </mapper>

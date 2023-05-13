@@ -1,11 +1,9 @@
 package com.huanghehua.www.cinema.app.service;
 
 import com.huanghehua.www.cinema.app.convertor.FilmConvertor;
-import com.huanghehua.www.cinema.app.executor.command.FilmAddCmdExe;
-import com.huanghehua.www.cinema.app.executor.command.FilmRemoveCmdExe;
+import com.huanghehua.www.cinema.app.executor.command.*;
 import com.huanghehua.www.cinema.client.dto.FilmDTO;
-import com.huanghehua.www.cinema.client.dto.command.FilmAddCmd;
-import com.huanghehua.www.cinema.client.dto.command.FilmRemoveCmd;
+import com.huanghehua.www.cinema.client.dto.command.*;
 import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
 import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ExhibitionGateWayImpl;
 import com.huanghehua.www.common.CommonResult;
@@ -43,6 +41,12 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     private FilmAddCmdExe filmAddCmdExe;
     @Reference
     private FilmRemoveCmdExe filmRemoveCmdExe;
+    @Reference
+    private ScheduleAddCmdExe scheduleAddCmdExe;
+    @Reference
+    private ScheduleRemoveCmdExe scheduleRemoveCmdExe;
+    @Reference
+    private SeatAddCmdExe seatAddCmdExe;
 
     @Override
     public CommonResult<List<FilmDTO>> showListPageInfo(String name, PageAbility pageAbility) {
@@ -101,5 +105,20 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     @Override
     public CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd) {
         return filmRemoveCmdExe.execute(filmRemoveCmd);
+    }
+
+    @Override
+    public CommonResult<?> addSchedule(ScheduleAddCmd scheduleAddCmd) {
+        return scheduleAddCmdExe.execute(scheduleAddCmd);
+    }
+
+    @Override
+    public CommonResult<?> removeSchedule(ScheduleRemoveCmd scheduleRemoveCmd) {
+        return scheduleRemoveCmdExe.execute(scheduleRemoveCmd);
+    }
+
+    @Override
+    public CommonResult<?> addSeat(SeatAddCmd seatAddCmd) {
+        return seatAddCmdExe.execute(seatAddCmd);
     }
 }

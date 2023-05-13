@@ -25,4 +25,6 @@ public interface OrderGateWay {
      * @return boolean
      */
     boolean removeOrder(Long orderId);
+
+
 }

@@ -1,6 +1,7 @@
 package com.huanghehua.www.cinema.app.convertor;
 
 import com.huanghehua.www.cinema.client.dto.SeatDTO;
+import com.huanghehua.www.cinema.client.dto.command.SeatAddCmd;
 import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
 
 import java.util.ArrayList;
@@ -46,5 +47,19 @@ public class SeatConvertor {
             list.add(seatDTO);
         }
         return list;
+    }
+
+
+    /**
+     * SeatAddCmd类型的dto模型转化为数据库持久化数据模型
+     *
+     * @param seatAddCmd 座位添加cmd
+     * @return {@link SeatPO}
+     */
+    public static SeatPO dtoToPo(SeatAddCmd seatAddCmd) {
+        return new SeatPO(
+                seatAddCmd.getHallId(),
+                seatAddCmd.getRow(),
+                seatAddCmd.getColumn());
     }
 }
