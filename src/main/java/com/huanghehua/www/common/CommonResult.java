@@ -67,7 +67,7 @@ public class CommonResult<T>{
      * @return {@link CommonResult}<{@link Object}>
      */
     public static CommonResult<Object> operateSuccess() {
-        return new CommonResult<>(new Object(), State.SUCCESS, "操作成功");
+        return new CommonResult<>(State.SUCCESS, "操作成功");
     }
     /**
      * 操作成功，需要返回数据对象
@@ -80,12 +80,13 @@ public class CommonResult<T>{
     }
 
     /**
+     * 操作失败
      * 用户端错误，一级宏观错误，自动返回一个空的数据对象。
      *
      * @param tipMessage 提示消息
-     * @return {@link CommonResult}<{@link T}>
+     * @return {@link CommonResult}<{@link Object}>
      */
-    public static <T> CommonResult<T> operateFail(String tipMessage) {
+    public static CommonResult<Object> operateFail(String tipMessage) {
         return new CommonResult<>(State.CLIENT_ERROR, tipMessage);
     }
 
