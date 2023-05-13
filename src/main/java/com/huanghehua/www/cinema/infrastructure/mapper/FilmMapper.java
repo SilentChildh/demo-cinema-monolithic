@@ -51,4 +51,21 @@ public interface FilmMapper {
      * @return {@link FilmPO}
      */
     FilmPO getFilmById(@Param("id") Long id);
+
+    /**
+     * 插入电影
+     *
+     * @param filmPo 电影阿宝
+     * @return int
+     */
+    int insertFilm(FilmPO filmPo);
+
+    /**
+     * 通过id，更新电影上映状态, 1为上映，0为下映
+     *
+     * @param id     id
+     * @param status 状态
+     * @return int
+     */
+    int updateStatusById(@Param("id") Long id, @Param("status") int status);
 }

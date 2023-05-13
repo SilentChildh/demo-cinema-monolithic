@@ -27,4 +27,17 @@
         where id = #{id}
     </select>
 
+    <insert id="insertFilm">
+        insert into film
+        (name, director, actor, releaseTime, duration, poster, status)
+        values
+        (#{name}, #{director}, #{actor}, #{releaseTime}, #{duration}, #{poster}, 1)
+    </insert>
+
+    <update id="updateStatusById">
+        update film
+        set status = #{status}
+        where id = #{id}
+    </update>
+
 </mapper>

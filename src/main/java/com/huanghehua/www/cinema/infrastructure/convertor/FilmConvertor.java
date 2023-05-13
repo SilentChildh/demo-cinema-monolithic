@@ -29,8 +29,9 @@ public class FilmConvertor {
         LocalDateTime releaseTime = filmPo.getReleaseTime();
         LocalTime duration = filmPo.getDuration();
         String poster = filmPo.getPoster();
+        Boolean status = filmPo.getStatus();
 
-        return new FilmModel(filmName, director, actor, releaseTime, duration, poster);
+        return new FilmModel(filmName, director, actor, releaseTime, duration, poster, status);
     }
 
     /**

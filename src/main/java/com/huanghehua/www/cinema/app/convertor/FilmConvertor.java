@@ -1,7 +1,9 @@
 package com.huanghehua.www.cinema.app.convertor;
 
 import com.huanghehua.www.cinema.client.dto.FilmDTO;
+import com.huanghehua.www.cinema.client.dto.command.FilmAddCmd;
 import com.huanghehua.www.cinema.domain.exhibition.FilmModel;
+import com.huanghehua.www.cinema.infrastructure.data.FilmPO;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -52,4 +54,20 @@ public class FilmConvertor {
 
         return list;
     }
+
+    /**
+     * dto模型转化为持久化对象
+     *
+     * @param filmAddCmd 电影添加cmd
+     * @return {@link FilmPO}
+     */
+    public static FilmPO dtoToPo(FilmAddCmd filmAddCmd) {
+        return new FilmPO(filmAddCmd.getName(),
+                filmAddCmd.getDirector(),
+                filmAddCmd.getActor(),
+                filmAddCmd.getReleaseTime(),
+                filmAddCmd.getDuration(),
+                filmAddCmd.getPoster());
+    }
+
 }

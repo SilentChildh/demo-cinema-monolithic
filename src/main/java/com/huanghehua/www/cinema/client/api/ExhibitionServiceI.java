@@ -1,6 +1,8 @@
 package com.huanghehua.www.cinema.client.api;
 
 import com.huanghehua.www.cinema.client.dto.FilmDTO;
+import com.huanghehua.www.cinema.client.dto.command.FilmAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.FilmRemoveCmd;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.common.PageAbility;
 
@@ -38,4 +40,28 @@ public interface ExhibitionServiceI {
      * @return {@link CommonResult}<{@link FilmDTO}>
      */
     CommonResult<FilmDTO> getFilmInfo(Long filmId);
+
+
+    /**
+     * 添加电影信息
+     *
+     * @param filmAddCmd 电影添加cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> addFilm(FilmAddCmd filmAddCmd);
+
+/*    *//**
+     * 更新电影
+     *
+     * @return {@link CommonResult}<{@link ?}>
+     *//*
+    CommonResult<?> updateFilm();*/
+
+    /**
+     * 删除电影
+     *
+     * @param filmRemoveCmd 电影删除cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd);
 }

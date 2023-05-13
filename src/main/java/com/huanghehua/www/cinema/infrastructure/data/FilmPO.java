@@ -1,5 +1,7 @@
 package com.huanghehua.www.cinema.infrastructure.data;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -41,6 +43,10 @@ public class FilmPO {
      */
     private String poster;
     /**
+     * 电影状态，下映时为false，上映时为true
+     */
+    private Boolean status;
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;
@@ -49,8 +55,11 @@ public class FilmPO {
      */
     private LocalDateTime updateTime;
 
+    public FilmPO() {
+    }
+
     public FilmPO(Long id, String name, String director, String actor, LocalDateTime releaseTime, LocalTime duration,
-                  String poster, LocalDateTime createTime, LocalDateTime updateTime) {
+                  String poster, Boolean status, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
         this.name = name;
         this.director = director;
@@ -58,16 +67,24 @@ public class FilmPO {
         this.releaseTime = releaseTime;
         this.duration = duration;
         this.poster = poster;
+        this.status = status;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
 
-    public FilmPO() {
+    public FilmPO(String name, String director, String actor, LocalDateTime releaseTime,
+                  LocalTime duration, String poster, Boolean status) {
+        this.name = name;
+        this.director = director;
+        this.actor = actor;
+        this.releaseTime = releaseTime;
+        this.duration = duration;
+        this.poster = poster;
+        this.status = status;
     }
 
-    public FilmPO(Long id, String name, String director, String actor,
+    public FilmPO(String name, String director, String actor,
                   LocalDateTime releaseTime, LocalTime duration, String poster) {
-        this.id = id;
         this.name = name;
         this.director = director;
         this.actor = actor;
@@ -85,12 +102,7 @@ public class FilmPO {
             return false;
         }
         FilmPO filmPO = (FilmPO) o;
-        return Objects.equals(id, filmPO.id) && Objects.equals(name, filmPO.name) && Objects.equals(director, filmPO.director) && Objects.equals(actor, filmPO.actor) && Objects.equals(releaseTime, filmPO.releaseTime) && Objects.equals(duration, filmPO.duration) && Objects.equals(poster, filmPO.poster) && Objects.equals(createTime, filmPO.createTime) && Objects.equals(updateTime, filmPO.updateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, director, actor, releaseTime, duration, poster, createTime, updateTime);
+        return Objects.equals(id, filmPO.id) && Objects.equals(name, filmPO.name) && Objects.equals(director, filmPO.director) && Objects.equals(actor, filmPO.actor) && Objects.equals(releaseTime, filmPO.releaseTime) && Objects.equals(duration, filmPO.duration) && Objects.equals(poster, filmPO.poster) && Objects.equals(status, filmPO.status) && Objects.equals(createTime, filmPO.createTime) && Objects.equals(updateTime, filmPO.updateTime);
     }
 
     @Override
@@ -103,9 +115,23 @@ public class FilmPO {
                 ", releaseTime=" + releaseTime +
                 ", duration=" + duration +
                 ", poster='" + poster + '\'' +
+                ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, director, actor, releaseTime, duration, poster, status, createTime, updateTime);
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Long getId() {

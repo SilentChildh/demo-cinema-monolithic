@@ -1,7 +1,11 @@
 package com.huanghehua.www.cinema.app.service;
 
 import com.huanghehua.www.cinema.app.convertor.FilmConvertor;
+import com.huanghehua.www.cinema.app.executor.command.FilmAddCmdExe;
+import com.huanghehua.www.cinema.app.executor.command.FilmRemoveCmdExe;
 import com.huanghehua.www.cinema.client.dto.FilmDTO;
+import com.huanghehua.www.cinema.client.dto.command.FilmAddCmd;
+import com.huanghehua.www.cinema.client.dto.command.FilmRemoveCmd;
 import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
 import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ExhibitionGateWayImpl;
 import com.huanghehua.www.common.CommonResult;
@@ -35,6 +39,10 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
      */
     @Reference(ExhibitionGateWayImpl.class)
     private ExhibitionGateWay exhibitionGateWay;
+    @Reference
+    private FilmAddCmdExe filmAddCmdExe;
+    @Reference
+    private FilmRemoveCmdExe filmRemoveCmdExe;
 
     @Override
     public CommonResult<List<FilmDTO>> showListPageInfo(String name, PageAbility pageAbility) {
@@ -47,6 +55,9 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
 
         // 执行业务
         List<FilmModel> filmModels = exhibitionGateWay.listPageFilm(name, pageAbility);
+
+        // 如果未上映，则从list中删除
+        filmModels.removeIf(filmModel -> !filmModel.getStatus());
 
         // 数据结构转换
         List<FilmDTO> list = FilmConvertor.modelListToDto(filmModels);
@@ -62,8 +73,13 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
         ParametersVerifyHandler.handle(verifyServiceMethodParam);
 
 
+
         // 执行业务
         List<FilmModel> filmModels = exhibitionGateWay.listFilm(name);
+
+        // 如果未上映，则从list中删除
+        filmModels.removeIf(filmModel -> !filmModel.getStatus());
+
         // 数据结构转换
         List<FilmDTO> list = FilmConvertor.modelListToDto(filmModels);
         return CommonResult.operateSuccess(list);
@@ -72,9 +88,18 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     @Override
     public CommonResult<FilmDTO> getFilmInfo(Long filmId) {
         FilmModel film = exhibitionGateWay.getFilm(filmId);
-
         FilmDTO filmDTO = FilmConvertor.modelToDto(film);
 
         return CommonResult.operateSuccess(filmDTO);
+    }
+
+    @Override
+    public CommonResult<?> addFilm(FilmAddCmd filmAddCmd) {
+        return filmAddCmdExe.execute(filmAddCmd);
+    }
+
+    @Override
+    public CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd) {
+        return filmRemoveCmdExe.execute(filmRemoveCmd);
     }
 }
