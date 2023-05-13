@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <script src="vue.js"></script>
+    <script src="axios.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <film></film>
+    <hr><br/>
+
+    <schedule></schedule>
+    <hr><br/>
+
+</div>
+
+<script>
+    const film = Vue.extend({
+        template: `
+            <div>
+          <form @submit.prevent="add()">
+          <fieldset>
+            <legend>上映影片</legend>
+            <label>影片名称：<input type="text" v-model.trim="addFilm.name"/></label><br>
+            <label>导演：<input type="text" v-model.trim="addFilm.director"/></label><br>
+            <label>主演：<input type="text" v-model.trim="addFilm.actor"/></label><br>
+            <label>发布时间：<input type="datetime-local" v-model="addFilm.releaseTime"/></label><br>
+            <label>影片持续时间：<input type="text" v-model.trim="addFilm.duration"/></label><br>
+            <label>海报：<input type="text" v-model.trim="addFilm.poster"/></label><br>
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+
+          <form @submit.prevent="remove()">
+          <fieldset>
+            <legend>下映影片</legend>
+            <input type="number" placeholder="请输入需要下映的影片id" v-model.number="removeFilm.filmId">
+            <button>确认移除</button>
+            <br>
+          </fieldset>
+          </form>
+          </div>
+        `,
+        data() {
+            return {
+                addFilm : {
+                    // 影片名称
+                    name: '',
+                    // 导演
+                    director: '',
+                    // 主演
+                    actor: '',
+                    // 发布日期、时间
+                    releaseTime: '',
+                    // 影片持续时间
+                    duration: '',
+                    // 海报存储于数据库服务器的绝对路径
+                    poster: '',
+                },
+                removeFilm : {
+                    filmId : '-',
+                }
+            }
+        },
+        methods: {
+            add() {
+                axios.post('http://localhost:8080/api/admin/add-film', {
+                    name: this.addFilm.name,
+                    director: this.addFilm.director,
+                    actor: this.addFilm.actor,
+                    releaseTime: this.addFilm.releaseTime,
+                    duration: this.addFilm.duration,
+                    poster: this.addFilm.poster,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            },
+            remove() {
+                axios.post('http://localhost:8080/api/admin/remove-film', {
+                    filmId : this.removeFilm.filmId,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            }
+        }
+    })
+
+    const schedule = Vue.extend({
+        template: `
+            <div>
+          <form @submit.prevent="add()">
+          <fieldset>
+            <legend>影片上映场次</legend>
+            <label>影片id：<input type="number" v-model.number="addSchedule.filmId"/></label><br>
+            <label>影厅id：<input type="number" v-model.number="addSchedule.hallId"/></label><br>
+            <label>价格：<input type="text" v-model.trim="addSchedule.price"/></label><br>
+            <label>影片场次开始时间：<input type="datetime-local" v-model="addSchedule.startTime"/></label><br>
+            <label>影片场次结束时间：<input type="datetime-local" v-model="addSchedule.endTime"/></label><br>
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+
+          <form @submit.prevent="remove()">
+          <fieldset>
+            <legend>移除上映场次</legend>
+            <input type="number" placeholder="请输入需要移除上映的场次id" v-model.number="removeSchedule.scheduleId">
+            <button>确认移除</button>
+            <br>
+          </fieldset>
+          </form>
+          </div>
+        `,
+        data() {
+            return {
+                addSchedule : {
+                    // 影片id
+                    filmId: '',
+                    // 影厅id
+                    hallId: '',
+                    // 价格
+                    price: '',
+                    // 影片场次开始时间
+                    startTime: '',
+                    // 影片场次结束时间
+                    endTime: '',
+                },
+                removeSchedule : {
+                    scheduleId : '-',
+                }
+            }
+        },
+        methods: {
+            add() {
+                axios.post('http://localhost:8080/api/admin/add-schedule', {
+                    filmId: this.addSchedule.filmId,
+                    hallId: this.addSchedule.hallId,
+                    price: this.addSchedule.price,
+                    startTime: this.addSchedule.startTime,
+                    endTime: this.addSchedule.endTime,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            },
+            remove() {
+                axios.post('http://localhost:8080/api/admin/remove-schedule', {
+                    scheduleId : this.removeSchedule.scheduleId,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            }
+        }
+    })
+
+    const vm = new Vue({
+        el: '#app',
+        components: {
+            film, schedule,
+        },
+    })
+</script>
+</body>
+</html>
