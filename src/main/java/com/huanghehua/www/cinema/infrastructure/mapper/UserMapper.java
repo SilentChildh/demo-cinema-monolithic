@@ -32,4 +32,20 @@ public interface UserMapper {
      */
     UserPO getUserByEmail(@Param("email") String email, @Param("password") String password);
 
+    /**
+     * 通过id更新密码
+     *
+     * @param id       id
+     * @param password 密码
+     * @return int
+     */
+    int updatePasswordById(@Param("id") Long id, @Param("password") String password);
+
+    /**
+     * 通过id获取密码
+     *
+     * @param id id
+     * @return {@link String}
+     */
+    String getPasswordById(@Param("id") Long id);
 }

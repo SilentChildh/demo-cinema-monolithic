@@ -29,6 +29,14 @@ public class UserDTO {
         this.status = status;
     }
 
+    public UserDTO() {
+    }
+
+    public UserDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +

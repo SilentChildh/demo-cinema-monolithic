@@ -2,7 +2,7 @@
 
 <mapper namespace="com.huanghehua.www.cinema.infrastructure.mapper.UserMapper">
     <insert id="insertUser">
-        insert into user
+        insert into `user`
         (email, password, status)
         values
         (#{email}, #{password}, 1);
@@ -10,7 +10,18 @@
 
 
     <select id="getUserByEmail" resultType="com.huanghehua.www.cinema.infrastructure.data.UserPO">
-        select * from user
+        select * from `user`
         where email = #{email} and password = #{password};
+    </select>
+
+    <update id="updatePasswordById">
+        update `user`
+        set password = #{password}
+        where id = #{id}
+    </update>
+
+    <select id="getPasswordById" resultType="java.lang.String">
+        select password from` user`
+        where id = #{id}
     </select>
 </mapper>
