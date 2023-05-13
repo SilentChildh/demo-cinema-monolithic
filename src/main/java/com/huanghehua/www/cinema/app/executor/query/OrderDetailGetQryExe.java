@@ -31,27 +31,39 @@ public class OrderDetailGetQryExe {
     @Reference
     private SeatMapper seatMapper;
 
+    /**
+     * 通过订单id获取订单详情<br/>
+     * <p/>
+     * 当订单失效时，返回失败结果
+     *
+     * @param orderDetailGetQry 订单细节得到qry
+     * @return {@link CommonResult}<{@link OrderDetailDTO}>
+     */
     public CommonResult<OrderDetailDTO> execute(OrderDetailGetQry orderDetailGetQry) {
-        // 获取订单id
+        // 获取订单id，并获取订单持久化对象
         Long orderId = orderDetailGetQry.getId();
+        OrderPO orderPo = orderMapper.getOrderById(orderId);
+
+        if (!orderPo.getStatus()) {
+            return CommonResult.operateFail("订单失效，请重新尝试...");
+        }
 
         // 创建并填充DTO
-        OrderDetailDTO orderDetailDTO = this.fillOrderDetailDTO(new OrderDetailDTO(), orderId);
+        OrderDetailDTO orderDetailDTO = this.fillOrderDetailDTO(new OrderDetailDTO(), orderPo);
 
         return CommonResult.operateSuccess(orderDetailDTO);
     }
 
     /**
-     * 通过订单id，填充传入的DTO中的场次相关信息和座位相关信息，即不包含影片相关信息
+     * 通过订单持久化对象，填充传入的DTO中的场次相关信息和座位相关信息，即不包含影片相关信息
      * 最后返回同一引用的DTO
      *
-     * @param orderId        订单id
      * @param orderDetailDTO 订单细节dto
+     * @param orderPo        订单订单
      * @return {@link OrderDetailDTO}
      */
-    protected OrderDetailDTO fillOrderDetailDTO(OrderDetailDTO orderDetailDTO, Long orderId) {
+    protected OrderDetailDTO fillOrderDetailDTO(OrderDetailDTO orderDetailDTO, OrderPO orderPo) {
         // 获取订单相关信息
-        OrderPO orderPo = orderMapper.getOrderById(orderId);
         Long scheduleId = orderPo.getScheduleId();
         Long seatId = orderPo.getSeatId();
 

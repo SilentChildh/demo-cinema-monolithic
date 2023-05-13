@@ -84,7 +84,7 @@ public class OrderController {
      * @return {@link CommonResult}<{@link List}<{@link HistoryOrderDetailDTO}>>
      */
     @Request(value = "/order-history", method = "get")
-    public CommonResult<List<HistoryOrderDetailDTO>> order(@RequestParam("userId") Long userId) {
+    public CommonResult<List<HistoryOrderDetailDTO>> showHistoryOrderDetail(@RequestParam("userId") Long userId) {
         // 转换为qry模型
         HistoryOrderDetailListQry historyOrderDetailListQry = new HistoryOrderDetailListQry(userId);
 

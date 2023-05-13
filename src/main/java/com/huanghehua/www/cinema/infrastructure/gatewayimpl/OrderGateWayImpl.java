@@ -34,6 +34,6 @@ public class OrderGateWayImpl implements OrderGateWay {
 
     @Override
     public boolean removeOrder(Long orderId) {
-        orderMapper.
+        return orderMapper.updateOrderStatusById(orderId, 0) > 0;
     }
 }

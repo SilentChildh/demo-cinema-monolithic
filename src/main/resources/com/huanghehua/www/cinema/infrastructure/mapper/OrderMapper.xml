@@ -19,4 +19,15 @@
         set status = #{status}
         where id = #{id}
     </update>
+
+
+    <select id="listOrderIdByUserId" resultType="java.lang.Long">
+        select id from `order`
+        where userId = #{userId}
+    </select>
+
+    <select id="getUpdateTimeById" resultType="java.time.LocalDateTime">
+        select updateTime from `order`
+        where id = #{id}
+    </select>
 </mapper>

@@ -6,6 +6,8 @@ import com.huanghehua.www.ioc.annotation.Mapper;
 import com.huanghehua.www.orm.annotation.Param;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 顺序映射器
@@ -40,10 +42,29 @@ public interface OrderMapper {
     OrderPO getOrderById(@Param("id") Long id);
 
     /**
-     * 更新订单状态, 1为有效，0为无效
+     * 根据id更新订单状态, 1为有效，0为无效
      *
      * @param status 状态
+     * @param id     id
      * @return int
      */
-    int updateOrderStatus(@Param("status") int status);
+    int updateOrderStatusById(@Param("id") Long id,
+                              @Param("status") int status);
+
+
+    /**
+     * 通过用户id获取订单id列表
+     *
+     * @param userId 用户id
+     * @return {@link List}<{@link Long}>
+     */
+    List<Long> listOrderIdByUserId(@Param("userId") Long userId);
+
+    /**
+     * 通过订单id获取历史记录更新时间
+     *
+     * @param id id
+     * @return {@link LocalDateTime}
+     */
+    LocalDateTime getUpdateTimeById(@Param("id") Long id);
 }
