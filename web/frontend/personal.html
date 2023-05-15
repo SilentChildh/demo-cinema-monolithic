@@ -26,7 +26,7 @@
           <fieldset>
           <legend>历史订单记录</legend>
           <ul>
-            <li v-for="res in commonResults">
+            <li v-for="res in commonResults" :key="res.filmId">
               {{ '影片名称 : ' + res.filmId }}<br>
               {{ '导演 : ' + res.director }}<br>
               {{ '主演 : ' + res.actor }}<br>
@@ -143,7 +143,6 @@
                     orderId: this.orderId,
                 })
                     .then(response => {
-                        this.count = response.data.data;
 
                         alert(response.data.tipMessage)
                     })
@@ -197,14 +196,14 @@
                     axios.post('http://localhost:8080/api/user/setting-password', {
                         userId: this.userId,
                         oldPassword: this.oldPassword,
-                        newPassword: this.newPassword,
+                        newPassword: this.newPassword1,
                     })
                         .then(response => {
                             this.commonResult = response.data.data;
                             alert(response.data.tipMessage)
                         })
                         .catch(error => {
-                            alert("punchclock响应的提示信息" + error.response.data.tipMessage)
+                            alert(error.response.data.tipMessage)
                         });
                 }
 
@@ -212,250 +211,11 @@
         },
     })
 
-    const notice = Vue.extend({
-        template: `
-          <fieldset>
-          <legend>通知信息</legend>
-          <ul>
-            <li v-for="notice in notices" :key="notice.id">
-              {{ '通知信息 : ' + notice.noticeInformation }}<br>
-              {{ '通知时间 : ' + notice.createTime }}<br>
-              {{ '通知更新时间 : ' + notice.updateTime }}<br>
-            </li>
-          </ul>
-          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
-          <button @click.self="flush">查看通知</button><br/>
-          </fieldset>
-        `,
-        data() {
-            return {
-                employeeId: '',
-                notices: [
-                    {
-                        // 主键id
-                        id: '--',
-                        // 被通知的员工名字
-                        name: '--',
-                        // 被通知的员工工号，普通索引
-                        jobNumber: '--',
-                        // 通知信息
-                        noticeInformation: '--',
-                        // 被通知员工的id，外键索引
-                        employeeId: '--',
-                        // 通知记录的创建时间, 普通索引
-                        createTime: '--',
-                        // 通知记录的更新时间
-                        updateTime: '--',
-                    },
-                ],
-                page: {
-                    // 页面承载的最大记录条数
-                    maxPageSize: 5,
-                    // 当前页码
-                    currentPageNumber: 1,
-                }
-            }
-        },
-        mounted() {
-            const urlSearchParams = new URLSearchParams(window.location.search);
-            this.employeeId = urlSearchParams.get('id');
-            alert("notice mounted request() be invoked")
-        },
-        methods: {
-            flush() {
-                axios.get('/www.huanghehua.com/api/notice/info', {
-                    params: {
-                        employeeId: this.employeeId,
-                        maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
-                    }
-                })
-                    .then(response => {
-                        this.notices = response.data.data;
-                        alert(response.data.tipMessage)
-                    })
-                    .catch(error => {
-                        alert("notice响应的提示信息" + error.response.data.tipMessage)
-                    });
-            }
-
-        }
-    })
-    const task = Vue.extend({
-        template: `
-          <fieldset>
-          <legend>任务清单</legend>
-          <ul>
-            <li v-for="task in tasks" :key="task.id">
-              {{ '任务名字 : ' + task.name }}<br>
-              {{ '任务描述 : ' + task.description }}<br>
-              {{ '任务负责人id : ' + task.employeeId }}<br>
-              {{ '是否完成 : ' + task.status }}<br>
-              {{ '是否启动 : ' + task.isActive }}<br>
-              {{ '任务结果评估 : ' + task.evaluation }}<br>
-              {{ '任务隶属公司id : ' + task.companyId }}<br>
-              {{ '任务创建的时间 : ' + task.createTime }}<br>
-              {{ '任务信息的更新时间 : ' + task.updateTime }}<br>
-            </li>
-          </ul>
-          <button @click.self="show()">查看任务</button><br>
-          <p/>
-
-          <form @submit.prevent="add()">
-            <fieldset>
-              <legend>新增任务</legend>
-              <label>任务名字：<input type="text" v-model.trim="newTask.name"/></label><br>
-              <label>任务描述：<textarea v-model.lazy="newTask.description"></textarea></label><br>
-              <label>任务负责人id：<input type="number" v-model.number="newTask.employeeId"/></label><br>
-              <label>公司id：<input type="number" v-model.nnumber="newTask.companyId"/></label><br>
-              <button>提交</button>
-              <br>
-            </fieldset>
-          </form>
-
-          <form @submit.prevent="edit()">
-            <fieldset>
-              <legend>编辑任务</legend>
-              <label>任务id: <input placeholder="请输入需要修改的任务id" type="number"
-                                    v-model.number="updateTask.id"></label><br><br>
-              <label>任务名字：<input type="text" v-model.trim="updateTask.name"/></label><br>
-              <label>任务描述：<textarea v-model.lazy="updateTask.description"></textarea></label><br>
-              <label>任务负责人id：<input type="number" v-model.number="updateTask.employeeId"/></label><br>
-              <label>公司id：<input type="number" v-model.nnumber="updateTask.companyId"/></label><br>
-              <label>是否完成：
-                已完成<input type="radio" v-model="updateTask.status" value="1"/>
-                未完成<input type="radio" v-model="updateTask.status" value="0" checked/>
-              </label><br>
-              <label>是否启动：
-                启动<input type="radio" v-model="updateTask.isActive" value="1" checked/>
-                终止<input type="radio" v-model="updateTask.isActive" value="0"/>
-              </label><br>
-              <label>任务结果评估：<textarea v-model.lazy="updateTask.evaluation"></textarea></label><br>
-              <button>提交修改</button>
-              <br>
-            </fieldset>
-          </form>
-
-          </fieldset>
-        `,
-        data() {
-            return {
-                employeeId: '',
-                tasks: [
-                    {
-                        // 主键id
-                        id: '--',
-                        // 任务名字
-                        name: '--',
-                        // 任务描述
-                        description: '--',
-                        // 任务负责人id，外键索引
-                        employeeId: '--',
-                        // 任务的状态，true完成，false未完成
-                        status: '--',
-                        // 任务的状态，true任务正常，false任务终止
-                        isActive: '--',
-                        // 任务结果评估
-                        evaluation: '--',
-                        // 任务隶属公司id，外键索引
-                        companyId: '--',
-                        // 任务创建的时间
-                        createTime: '--',
-                        // 任务信息的更新时间
-                        updateTime: '--',
-                    },
-                ],
-                newTask: {
-                    // 任务名字
-                    name: '',
-                    // 任务描述
-                    description: '',
-                    // 任务负责人id，外键索引
-                    employeeId: '',
-                    // 任务隶属公司id，外键索引
-                    companyId: '',
-                },
-                updateTask: {
-                    id: '',
-                    // 任务名字
-                    name: '',
-                    // 任务描述
-                    description: '',
-                    // 任务负责人id，外键索引
-                    employeeId: '',
-                    // 任务隶属公司id，外键索引
-                    companyId: '',
-                    // 任务的状态，true完成，false未完成
-                    status: '',
-                    // 任务的状态，true任务正常，false任务终止
-                    isActive: '',
-                    // 任务结果评估
-                    evaluation: '',
-                },
-            }
-        },
-        mounted() {
-            const urlSearchParams = new URLSearchParams(window.location.search);
-            this.employeeId = urlSearchParams.get('id');
-            alert("task mounted request() be invoked")
-        },
-        methods: {
-            show() {
-                axios.get('/www.huanghehua.com/api/task/info', {
-                    params: {
-                        employeeId: this.employeeId,
-                    }
-                })
-                    .then(response => {
-                        this.tasks = response.data.data;
-                        alert(response.data.tipMessage)
-                    })
-                    .catch(error => {
-                        alert(error.response.data.tipMessage)
-                    });
-            },
-            add() {
-                axios.post('/www.huanghehua.com/api/task/add', {
-                    name: this.newTask.name,
-                    description: this.newTask.description,
-                    employeeId: this.newTask.employeeId,
-                    companyId: this.newTask.companyId,
-                })
-                    .then(response => {
-                        alert(response.data.tipMessage)
-                    })
-                    .catch(error => {
-                        alert("task响应的提示信息" + error.response.data.tipMessage)
-                    });
-
-            },
-            edit() {
-                axios.post('/www.huanghehua.com/api/task/update', {
-                    id: this.updateTask.id,
-                    name: this.updateTask.name,
-                    description: this.updateTask.description,
-                    employeeId: this.updateTask.employeeId,
-                    companyId: this.updateTask.companyId,
-                    status: this.updateTask.status,
-                    isActive: this.updateTask.isActive,
-                    evaluation: this.updateTask.evaluation,
-                })
-                    .then(response => {
-                        alert(response.data.tipMessage)
-                    })
-                    .catch(error => {
-                        alert('task edit request be invoked fail')
-                        alert("task响应的提示信息" + error.response.data.tipMessage)
-                    });
-            }
-        }
-    })
 
     const vm = new Vue({
         el: '#app',
         components: {
             historyorderdetail, cancelorder, setting,
-            notice, task,
 
         },
     })

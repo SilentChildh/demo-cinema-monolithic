@@ -15,6 +15,12 @@
     <schedule></schedule>
     <hr><br/>
 
+    <seat></seat>
+    <hr><br/>
+
+    <hall></hall>
+    <hr><br/>
+
 </div>
 
 <script>
@@ -43,6 +49,15 @@
             <br>
           </fieldset>
           </form>
+
+          <form @submit.prevent="undoRemove()">
+          <fieldset>
+            <legend>恢复上映</legend>
+            <input type="number" placeholder="请输入恢复上映的影片id" v-model.number="undoRemoveFilm.filmId">
+            <button>确认恢复</button>
+            <br>
+          </fieldset>
+          </form>
           </div>
         `,
         data() {
@@ -62,6 +77,9 @@
                     poster: '',
                 },
                 removeFilm : {
+                    filmId : '-',
+                },
+                undoRemoveFilm : {
                     filmId : '-',
                 }
             }
@@ -86,6 +104,17 @@
             remove() {
                 axios.post('http://localhost:8080/api/admin/remove-film', {
                     filmId : this.removeFilm.filmId,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            },
+            undoRemove() {
+                axios.post('http://localhost:8080/api/admin/undo-remove-film', {
+                    filmId : this.undoRemoveFilm.filmId,
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -172,10 +201,141 @@
         }
     })
 
+    const seat = Vue.extend({
+        template: `
+            <div>
+          <form @submit.prevent="add()">
+          <fieldset>
+            <legend>影厅座位安排</legend>
+            <label>影厅id：<input type="number" v-model.number="addSeat.hallId"/></label><br>
+            <label>行号：<input type="number" v-model.number="addSeat.row"/></label><br>
+            <label>列号：<input type="number" v-model.number="addSeat.column"/></label><br>
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+
+          <form @submit.prevent="remove()">
+          <fieldset>
+            <legend>移除座位</legend>
+            <input type="number" placeholder="请输入需要影厅id" v-model.number="removeSeat.hallId"><br/>
+            <input type="number" placeholder="请输入需要移除的座位id" v-model.number="removeSeat.seatId"><br/>
+            <button>确认移除</button>
+            <br>
+          </fieldset>
+          </form>
+          </div>
+        `,
+        data() {
+            return {
+                addSeat: {
+                    hallId : "",
+                    row : "",
+                    column : "",
+                },
+                removeSeat : {
+                    hallId : "",
+                    seatId : '',
+                }
+            }
+        },
+        methods: {
+            add() {
+                axios.post('http://localhost:8080/api/admin/add-seat', {
+                    hallId: this.addSeat.hallId,
+                    row: this.addSeat.row,
+                    column: this.addSeat.column,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            },
+            remove() {
+                axios.post('http://localhost:8080/api/admin/remove-seat', {
+                    hallId: this.removeSeat.hallId,
+                    seatId : this.removeSeat.seatId,
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            }
+        }
+    })
+
+
+    const hall = Vue.extend({
+        template: `
+            <div>
+          <form @submit.prevent="add()">
+          <fieldset>
+            <legend>添加影厅</legend>
+            <label>可容纳人数：<input type="number" v-model.number="addHall.capacity"/></label><br>
+            <button>提交</button>
+            <br>
+          </fieldset>
+          </form>
+
+          <form @submit.prevent="remove()">
+          <fieldset>
+            <legend>移除影厅</legend>
+            <input type="number" placeholder="请输入需要移除的影厅id" v-model.number="removeHall.hallId"><br/>
+            <button>确认移除</button>
+            <br>
+          </fieldset>
+          </form>
+          </div>
+        `,
+        data() {
+            return {
+                addHall: {
+                    capacity : "",
+                },
+                removeHall : {
+                    hallId : "",
+                }
+            }
+        },
+        methods: {
+            add() {
+                axios.get('http://localhost:8080/api/admin/add-hall', {
+                    params : {
+                        capacity: this.addHall.capacity,
+                    }
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            },
+            remove() {
+                axios.get('http://localhost:8080/api/admin/remove-hall', {
+                    params : {
+                        hallId: this.removeHall.hallId,
+                    }
+                })
+                    .then(response => {
+                        alert(response.data.tipMessage)
+                    })
+                    .catch(error => {
+                        alert(error.response.data.tipMessage)
+                    });
+            }
+        }
+    })
+
+
     const vm = new Vue({
         el: '#app',
         components: {
-            film, schedule,
+            film, schedule, seat, hall
         },
     })
 </script>

@@ -69,7 +69,7 @@
         `,
         data() {
             return {
-                name : "",
+                name: "",
                 httpCode: 200,
                 errorCode: "00000",
                 errorMessage: "",
@@ -88,13 +88,13 @@
                         releaseTime: '-',
                         // 影片持续时间
                         duration: '-',
-                        // 海报存储于数据库服务器的绝对路径
+                        // 海报存储于数据库服务器的相对路径
                         poster: '-'
                     }
                 ],
                 page: {
                     // 页面承载的最大记录条数
-                    maxPageSize: 1,
+                    maxPageSize: 5,
                     // 当前页码
                     currentPageNumber: 1,
                 },
@@ -112,7 +112,7 @@
                 )
                     .then(response => {
                         this.commonResults = response.data.data;
-
+                        this.commonResults[0].poster = decodeURI(this.commonResults[0].poster)
                         alert(response.data.tipMessage)
                     })
                     .catch(error => {
@@ -181,7 +181,7 @@
                 ],
                 page: {
                     // 页面承载的最大记录条数
-                    maxPageSize: 1,
+                    maxPageSize: 5,
                     // 当前页码
                     currentPageNumber: 1,
                 },
@@ -263,7 +263,7 @@
                 ],
                 page: {
                     // 页面承载的最大记录条数
-                    maxPageSize: 1,
+                    maxPageSize: 5,
                     // 当前页码
                     currentPageNumber: 1,
                 },
@@ -338,8 +338,9 @@
           <legend>订单详情</legend>
           <input type="number" placeholder="请输入需要查看的订单id" v-model.number="orderId"/><br>
           <ul>
-            <li v-for="res in commonResults">
-              {{ '影片名称 : ' + res.filmId }}<br>
+            <li>
+              {{ '影片id : ' + res.filmId }}<br>
+              {{ '影片名称 : ' + res.filmName }}<br>
               {{ '导演 : ' + res.director }}<br>
               {{ '主演 : ' + res.actor }}<br>
               {{ '发布日期、时间 : ' + res.releaseTime }}<br>
@@ -354,53 +355,44 @@
               {{ '列号 : ' + res.column }}<br>
             </li>
           </ul>
-          请输入跳转的页数: <input type="number" v-model.number="page.currentPageNumber">
-          <button @click.self="flush">跳转查看</button><br/>
+          <button @click.self="flush">查看</button><br/>
           </fieldset>
         `,
         data() {
             return {
                 // 订单id
                 orderId: "-",
-                commonResults: [
-                    {
-                        // 影片id
-                        filmId: "-",
-                        // 影片名称
-                        filmName: "-",
-                        // 导演
-                        director: "-",
-                        // 主演
-                        actor: "-",
-                        // 发布日期、时间
-                        releaseTime: "-",
-                        // 影片持续时间
-                        duration: "-",
-                        // 海报存储于数据库服务器的绝对路径
-                        poster: "-",
+                res: {
+                    // 影片id
+                    filmId: "-",
+                    // 影片名称
+                    filmName: "-",
+                    // 导演
+                    director: "-",
+                    // 主演
+                    actor: "-",
+                    // 发布日期、时间
+                    releaseTime: "-",
+                    // 影片持续时间
+                    duration: "-",
+                    // 海报存储于数据库服务器的绝对路径
+                    poster: "-",
 
 
-                        // 影厅id
-                        hallId: "-",
-                        // 价格
-                        price: "-",
-                        // 影片场次开始时间
-                        startTime: "-",
-                        // 影片场次结束时间
-                        endTime: "-",
+                    // 影厅id
+                    hallId: "-",
+                    // 价格
+                    price: "-",
+                    // 影片场次开始时间
+                    startTime: "-",
+                    // 影片场次结束时间
+                    endTime: "-",
 
 
-                        // 行号
-                        row: "-",
-                        // 列号
-                        column: "-",
-                    },
-                ],
-                page: {
-                    // 页面承载的最大记录条数
-                    maxPageSize: 5,
-                    // 当前页码
-                    currentPageNumber: 1,
+                    // 行号
+                    row: "-",
+                    // 列号
+                    column: "-",
                 }
             }
         },
@@ -409,12 +401,10 @@
                 axios.get('http://localhost:8080/api/reservation/info', {
                     params: {
                         orderId: this.orderId,
-                        maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
                     }
                 })
                     .then(response => {
-                        this.commonResults = response.data.data;
+                        this.res = response.data.data;
                         alert(response.data.tipMessage)
                     })
                     .catch(error => {
