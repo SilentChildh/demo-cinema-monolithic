@@ -9,17 +9,17 @@ import java.util.Objects;
  * @date 2023/04/26
  */
 public class JwtSignatureDTO {
+    /**
+     * 用户id
+     */
+    private Long userId;
     private String jwt;
 
-    public JwtSignatureDTO(String jwt) {
-        this.jwt = jwt;
+    public JwtSignatureDTO() {
     }
 
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
+    public JwtSignatureDTO(Long userId, String jwt) {
+        this.userId = userId;
         this.jwt = jwt;
     }
 
@@ -31,19 +31,37 @@ public class JwtSignatureDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        JwtSignatureDTO jwtSignatureDTO = (JwtSignatureDTO) o;
-        return Objects.equals(jwt, jwtSignatureDTO.jwt);
+        JwtSignatureDTO that = (JwtSignatureDTO) o;
+        return Objects.equals(userId, that.userId) && Objects.equals(jwt, that.jwt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(jwt);
+        return Objects.hash(userId, jwt);
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return "Signature{" +
-                "jwt='" + jwt + '\'' +
+        return "JwtSignatureDTO{" +
+                "userId=" + userId +
+                ", jwt='" + jwt + '\'' +
                 '}';
     }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
+
 }

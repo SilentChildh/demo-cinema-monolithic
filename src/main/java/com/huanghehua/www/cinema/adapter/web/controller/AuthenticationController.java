@@ -1,6 +1,7 @@
 package com.huanghehua.www.cinema.adapter.web.controller;
 
 
+import com.huanghehua.www.cinema.client.dto.command.UserLoginCmd;
 import com.huanghehua.www.cinema.app.service.AuthenticationServiceImpl;
 import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
 import com.huanghehua.www.cinema.client.dto.UserDTO;
@@ -25,14 +26,12 @@ public class AuthenticationController {
     /**
      * 获取请求中携带的用户信息，进行登录操作，成功则返回带有JWT的信息，否则返回错误提示信息。
      *
-     * @param userDto 用户请求数据
+     * @param userLoginCmd 用户登录cmd
      * @return {@link CommonResult}<{@link ?}>
      */
     @Request(value = "/login", method = "post")
-    public CommonResult<?> login(UserDTO userDto) {
-        String email = userDto.getEmail();
-        String password = userDto.getPassword();
-        return authenticationService.login(email, password);
+    public CommonResult<?> login(UserLoginCmd userLoginCmd) {
+        return authenticationService.login(userLoginCmd);
     }
 
     /**

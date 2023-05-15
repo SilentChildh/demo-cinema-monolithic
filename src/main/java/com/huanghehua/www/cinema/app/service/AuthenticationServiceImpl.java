@@ -3,6 +3,7 @@ package com.huanghehua.www.cinema.app.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.huanghehua.www.cinema.client.dto.command.UserLoginCmd;
 import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
 import com.huanghehua.www.cinema.client.dto.JwtSignatureDTO;
 import com.huanghehua.www.cinema.client.dto.UserDTO;
@@ -35,22 +36,19 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
     private AuthenticationGateWay authenticationGateWay;
 
     @Override
-    public CommonResult<?> login(@RegexPattern(".*@.*") String email,
-                                            @Size(min = 6, max = 18) String password) {
+    public CommonResult<?> login(UserLoginCmd userLoginCmd) {
+
+        String email = userLoginCmd.getEmail();
+        String password = userLoginCmd.getPassword();
+
         // 一天的间隔时间
         final Period interval = Period.ofDays(1);
 
-        // 参数检验
-        VerifyServiceMethodParam verifyServiceMethodParam =
-                new VerifyServiceMethodParam(AuthenticationServiceImpl.class, "login",
-                new Class<?>[]{String.class, String.class}, new Object[]{email, password});
-        ParametersVerifyHandler.handle(verifyServiceMethodParam);
-
-        // 执行登录业务
-        boolean doLogin = authenticationGateWay.doLogin(email, password);
+        // 执行登录业务，并获取用户id
+        Long userId = authenticationGateWay.doLogin(email, password);
 
         // 登录失败，直接返回
-        if (!doLogin) {
+        if (userId == null) {
             return CommonResult.operateFail("login fail! please retry...");
         }
 
@@ -68,7 +66,7 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
         String jwt = builder.sign(Algorithm.HMAC256(secretKey));
 
         // JWT封装为DTO，并返回
-        JwtSignatureDTO jwtSignatureDTO = new JwtSignatureDTO(jwt);
+        JwtSignatureDTO jwtSignatureDTO = new JwtSignatureDTO(userId, jwt);
         return CommonResult.operateSuccess(jwtSignatureDTO);
 
     }

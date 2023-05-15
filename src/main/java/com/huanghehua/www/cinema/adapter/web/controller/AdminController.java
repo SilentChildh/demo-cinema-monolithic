@@ -45,9 +45,4 @@ public class AdminController {
     public CommonResult<?> addSeat(SeatAddCmd seatAddCmd) {
         return exhibitionService.addSeat(seatAddCmd);
     }
-
-    public CommonResult<?> showOrderInfo() {
-
-    }
-
 }

@@ -19,11 +19,11 @@ public interface AuthenticationGateWay {
 
 
     /**
-     * 登录
+     * 登录，并返回用户id
      *
-     * @param email 邮箱
+     * @param email    邮箱
      * @param password 密码
-     * @return boolean
+     * @return Long
      */
-    boolean doLogin(String email, String password);
+    Long doLogin(String email, String password);
 }
