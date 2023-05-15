@@ -31,7 +31,7 @@ public class FilmConvertor {
         String poster = filmPo.getPoster();
         Boolean status = filmPo.getStatus();
 
-        return new FilmModel(filmName, director, actor, releaseTime, duration, poster, status);
+        return new FilmModel(filmPo.getId(), filmName, director, actor, releaseTime, duration, poster, status);
     }
 
     /**
