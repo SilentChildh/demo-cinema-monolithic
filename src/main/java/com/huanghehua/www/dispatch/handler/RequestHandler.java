@@ -82,8 +82,8 @@ public class RequestHandler {
         try {
             parametersMap = RequestHandler.parametersMappingHandle(request);
         } catch (UnsupportedEncodingException e) {
-            // TODO
-            throw new RuntimeException(e);
+            LOGGER.log(Level.SEVERE, "无法对URL进行解码", e);
+            throw new RuntimeException("无法对URL进行解码", e);
         }
         // 接收传入的实参
         List<Object> list = new ArrayList<>(12);
