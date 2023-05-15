@@ -46,6 +46,18 @@ public class FilmModel {
     private Boolean status;
 
     public FilmModel(Long id, String name, String director, String actor,
+                     LocalDateTime releaseTime, LocalTime duration, String poster, Boolean status) {
+        this.id = id;
+        this.name = name;
+        this.director = director;
+        this.actor = actor;
+        this.releaseTime = releaseTime;
+        this.duration = duration;
+        this.poster = poster;
+        this.status = status;
+    }
+
+    public FilmModel(Long id, String name, String director, String actor,
                      LocalDateTime releaseTime, LocalTime duration, String poster) {
         this.id = id;
         this.name = name;
