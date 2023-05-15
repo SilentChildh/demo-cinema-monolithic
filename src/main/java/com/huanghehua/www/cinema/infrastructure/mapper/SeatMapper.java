@@ -60,4 +60,32 @@ public interface SeatMapper {
      * @return int
      */
     int insertSeat(SeatPO seatPo);
+
+    /**
+     * 通过id删除座位
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteSeatById(@Param("id") Long id);
+
+    /**
+     * 通过影厅id、行号、列号获得座位数量
+     *
+     * @param hallId 大厅id
+     * @param row    行
+     * @param column 列
+     * @return {@link Long}
+     */
+    Long countSeat(@Param("hallId") Long hallId,
+                      @Param("row") Integer row,
+                      @Param("column") Integer column);
+
+    /**
+     * 通过影厅id、行号、列号获得座位数量
+     *
+     * @param hallId 大厅id
+     * @return {@link Long}
+     */
+    Long countSeatByHallId(@Param("hallId") Long hallId);
 }

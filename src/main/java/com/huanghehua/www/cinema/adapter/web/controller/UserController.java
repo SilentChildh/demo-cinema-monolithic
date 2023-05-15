@@ -26,4 +26,10 @@ public class UserController {
     public CommonResult<UserDTO> setUserPassword(UserPasswordUpdateCmd userPasswordUpdateCmd) {
         return userService.setUserPassword(userPasswordUpdateCmd);
     }
+
+    @Request(value = "/afford", method = "post")
+    public CommonResult<UserDTO> affordOrder(UserPasswordUpdateCmd userPasswordUpdateCmd) {
+        // TODO 支付订单
+        return userService.setUserPassword(userPasswordUpdateCmd);
+    }
 }

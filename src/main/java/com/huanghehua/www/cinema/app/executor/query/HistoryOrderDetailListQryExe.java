@@ -4,7 +4,11 @@ import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.query.HistoryOrderDetailListQry;
 import com.huanghehua.www.cinema.infrastructure.data.OrderPO;
+import com.huanghehua.www.cinema.infrastructure.data.SchedulePO;
+import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
 import com.huanghehua.www.cinema.infrastructure.mapper.OrderMapper;
+import com.huanghehua.www.cinema.infrastructure.mapper.ScheduleMapper;
+import com.huanghehua.www.cinema.infrastructure.mapper.SeatMapper;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
@@ -27,6 +31,10 @@ public class HistoryOrderDetailListQryExe extends OrderDetailGetQryExe {
 
     @Reference
     private OrderMapper orderMapper;
+    @Reference
+    private ScheduleMapper scheduleMapper;
+    @Reference
+    private SeatMapper seatMapper;
 
     /**
      * 通过订单id获取订单历史记录详情<br/>
@@ -54,7 +62,7 @@ public class HistoryOrderDetailListQryExe extends OrderDetailGetQryExe {
             }
 
             // 填充历史订单表，并获取DTO
-            OrderDetailDTO orderDetailDTO = super.fillOrderDetailDTO(new HistoryOrderDetailDTO(), orderPo);
+            OrderDetailDTO orderDetailDTO = this.fillOrderDetailDTO(new HistoryOrderDetailDTO(), orderPo);
             HistoryOrderDetailDTO historyOrderDetailDTO = (HistoryOrderDetailDTO) orderDetailDTO;
 
             // 设置历史时间
@@ -67,6 +75,36 @@ public class HistoryOrderDetailListQryExe extends OrderDetailGetQryExe {
 
 
         return CommonResult.operateSuccess(historyOrderDetailList);
+    }
+
+    /**
+     * 通过订单持久化对象，填充传入的DTO中的场次相关信息和座位相关信息，即不包含影片相关信息
+     * 最后返回同一引用的DTO
+     *
+     * @param orderDetailDTO 订单细节dto
+     * @param orderPo        订单订单
+     * @return {@link OrderDetailDTO}
+     */
+    protected OrderDetailDTO fillOrderDetailDTO(OrderDetailDTO orderDetailDTO, OrderPO orderPo) {
+        // TODO 怎么解决这里和父类的重复代码
+        // 获取订单相关信息
+        Long scheduleId = orderPo.getScheduleId();
+        Long seatId = orderPo.getSeatId();
+
+        // 获取场次相关信息
+        SchedulePO schedulePo = scheduleMapper.getScheduleById(scheduleId);
+        // 获取座位相关信息
+        SeatPO seatPo = seatMapper.getSeatById(seatId);
+
+        orderDetailDTO.setFilmId(schedulePo.getFilmId());
+        orderDetailDTO.setHallId(schedulePo.getHallId());
+        orderDetailDTO.setPrice(schedulePo.getPrice());
+        orderDetailDTO.setStartTime(schedulePo.getStartTime());
+        orderDetailDTO.setEndTime(schedulePo.getEndTime());
+        orderDetailDTO.setRow(seatPo.getRow());
+        orderDetailDTO.setColumn(seatPo.getColumn());
+
+        return orderDetailDTO;
     }
 
 }

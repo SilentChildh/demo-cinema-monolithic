@@ -4,6 +4,7 @@ import com.huanghehua.www.cinema.app.convertor.SeatConvertor;
 import com.huanghehua.www.cinema.app.executor.Executor;
 import com.huanghehua.www.cinema.client.dto.command.SeatAddCmd;
 import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
+import com.huanghehua.www.cinema.infrastructure.mapper.HallMapper;
 import com.huanghehua.www.cinema.infrastructure.mapper.SeatMapper;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.ioc.annotation.Bean;
@@ -21,9 +22,32 @@ import com.huanghehua.www.ioc.spi.aop.Interceptable;
 public class SeatAddCmdExe implements Executor<SeatAddCmd> {
     @Reference
     private SeatMapper seatMapper;
+    @Reference
+    private HallMapper hallMapper;
 
     @Override
     public CommonResult<?> execute(SeatAddCmd seatAddCmd) {
+        Long hallId = seatAddCmd.getHallId();
+        Integer row = seatAddCmd.getRow();
+        Integer column = seatAddCmd.getColumn();
+
+        // 检查是否不为正数
+        if (row <= 0 || column <= 0) {
+            return CommonResult.operateFail("座位号需要是正数");
+        }
+
+        // 检查是否存在该座位
+        Long countSeat = seatMapper.countSeat(hallId, row, column);
+        if (countSeat != 0) {
+            return CommonResult.operateFail("已存在该座位");
+        }
+
+        Integer capacity = hallMapper.getCapacityById(hallId);
+        Long seats = seatMapper.countSeatByHallId(hallId);
+        if (capacity.compareTo(seats.intValue()) == 0) {
+            return CommonResult.operateFail("已到达影厅最大容纳量");
+        }
+
         // 转换为持久化模型
         SeatPO seatPo = SeatConvertor.dtoToPo(seatAddCmd);
 

@@ -6,6 +6,7 @@ import com.huanghehua.www.cinema.client.dto.FilmDTO;
 import com.huanghehua.www.cinema.client.dto.command.*;
 import com.huanghehua.www.cinema.domain.gateway.ExhibitionGateWay;
 import com.huanghehua.www.cinema.infrastructure.gatewayimpl.ExhibitionGateWayImpl;
+import com.huanghehua.www.cinema.infrastructure.mapper.HallMapper;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.handler.ParametersVerifyHandler;
 import com.huanghehua.www.dispatch.model.VerifyServiceMethodParam;
@@ -47,6 +48,10 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     private ScheduleRemoveCmdExe scheduleRemoveCmdExe;
     @Reference
     private SeatAddCmdExe seatAddCmdExe;
+    @Reference
+    private SeatRemoveCmdExe seatRemoveCmdExe;
+    @Reference
+    private HallMapper hallMapper;
 
     @Override
     public CommonResult<List<FilmDTO>> showListPageInfo(String name, PageAbility pageAbility) {
@@ -120,5 +125,22 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     @Override
     public CommonResult<?> addSeat(SeatAddCmd seatAddCmd) {
         return seatAddCmdExe.execute(seatAddCmd);
+    }
+
+    @Override
+    public CommonResult<?> removeSeat(SeatRemoveCmd seatRemoveCmd) {
+        return seatRemoveCmdExe.execute(seatRemoveCmd);
+    }
+
+    @Override
+    public CommonResult<?> addHall(Integer capacity) {
+        int success = hallMapper.insertHall(capacity);
+        return success > 0 ? CommonResult.operateSuccess() : CommonResult.operateFail("添加影厅失败");
+    }
+
+    @Override
+    public CommonResult<?> removeHall(Long hallId) {
+        int success = hallMapper.deleteHallById(hallId);
+        return success > 0 ? CommonResult.operateSuccess() : CommonResult.operateFail("移除影厅失败");
     }
 }

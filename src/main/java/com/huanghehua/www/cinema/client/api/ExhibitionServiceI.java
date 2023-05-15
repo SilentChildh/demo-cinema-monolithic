@@ -89,4 +89,27 @@ public interface ExhibitionServiceI {
     CommonResult<?> addSeat(SeatAddCmd seatAddCmd);
 
 
+    /**
+     * 移除座位
+     *
+     * @param seatRemoveCmd 座位移除cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> removeSeat(SeatRemoveCmd seatRemoveCmd);
+
+    /**
+     * 添加影厅
+     *
+     * @param capacity 能力
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> addHall(Integer capacity);
+
+    /**
+     * 移除影厅
+     *
+     * @param hallId 大厅id
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> removeHall(Long hallId);
 }
