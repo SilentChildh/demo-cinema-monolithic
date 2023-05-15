@@ -21,7 +21,7 @@
     </update>
 
     <select id="getPasswordById" resultType="java.lang.String">
-        select password from` user`
+        select password from `user`
         where id = #{id}
     </select>
 </mapper>

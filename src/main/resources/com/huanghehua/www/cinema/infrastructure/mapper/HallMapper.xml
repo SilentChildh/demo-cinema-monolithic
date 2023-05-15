@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="com.huanghehua.www.cinema.infrastructure.mapper.HallMapper">
+
+    <insert id="insertHall">
+        insert into hall
+        (capacity)
+        values
+        (#{capacity})
+    </insert>
+
+    <delete id="deleteHallById">
+        delete from hall
+        where id = #{id}
+    </delete>
+
+    <select id="getCapacityById" resultType="java.lang.Integer">
+        select capacity from hall
+        where id = #{id}
+    </select>
+
+</mapper>

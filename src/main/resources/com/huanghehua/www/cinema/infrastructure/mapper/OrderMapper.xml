@@ -14,7 +14,7 @@
         where id = #{id}
     </select>
 
-    <update id="updateOrderStatus">
+    <update id="updateOrderStatusById">
         update `order`
         set status = #{status}
         where id = #{id}

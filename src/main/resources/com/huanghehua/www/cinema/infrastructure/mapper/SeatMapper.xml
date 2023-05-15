@@ -26,8 +26,25 @@
 
     <insert id="insertSeat">
         insert into seat
-        (hallId, row, column, status)
+        (hallId, `row`, `column`, status)
         values
         (#{hallId}, #{row}, #{column}, 0)
     </insert>
+
+    <delete id="deleteSeatById">
+        delete from seat
+        where id = #{id}
+    </delete>
+
+    <select id="countSeat" resultType="java.lang.Long">
+        select count(*) from seat
+        where hallId = #{hallId}
+        and `row` = #{row}
+        and `column` = #{column}
+    </select>
+
+    <select id="countSeatByHallId" resultType="java.lang.Long">
+        select count(*) from seat
+        where hallId = #{hallId}
+    </select>
 </mapper>
