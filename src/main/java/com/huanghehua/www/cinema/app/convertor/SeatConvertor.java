@@ -26,7 +26,7 @@ public class SeatConvertor {
         Long hallId = seatPo.getHallId();
         Integer row = seatPo.getRow();
         Integer column = seatPo.getColumn();
-        Boolean status = seatPo.getStatus();
+        String status = seatPo.getStatus() ? SeatDTO.TRUE_STATUS : SeatDTO.FALSE_STATUS;
 
         return new SeatDTO(id, hallId, row, column, status);
     }
