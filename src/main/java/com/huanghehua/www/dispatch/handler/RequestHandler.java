@@ -12,9 +12,11 @@ import com.huanghehua.www.dispatch.util.JsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +78,13 @@ public class RequestHandler {
     public static CommonResult<?> getMethodHandle(HttpServletRequest request,
                                                   ControllerMethodInfo controllerMethodInfo) {
         // 获取查询参数的映射
-        Map<String, String> parametersMap = RequestHandler.parametersMappingHandle(request);
+        Map<String, String> parametersMap = null;
+        try {
+            parametersMap = RequestHandler.parametersMappingHandle(request);
+        } catch (UnsupportedEncodingException e) {
+            // TODO
+            throw new RuntimeException(e);
+        }
         // 接收传入的实参
         List<Object> list = new ArrayList<>(12);
 
@@ -118,7 +126,7 @@ public class RequestHandler {
      * @param request 请求
      * @return {@link Map}<{@link String}, {@link String}>
      */
-    private static Map<String, String> parametersMappingHandle(HttpServletRequest request) {
+    private static Map<String, String> parametersMappingHandle(HttpServletRequest request) throws UnsupportedEncodingException {
         Map<String, String> parametersMap = new HashMap<>(16);
         String queryString = request.getQueryString();
         String[] split = queryString.split("&");
@@ -129,7 +137,10 @@ public class RequestHandler {
                 LOGGER.log(Level.INFO, "http请求中的查询字符串参数中缺少相关信息");
                 throw new HttpQueryParameterException("http请求中的查询字符串参数中缺少相关信息");
             }
-            parametersMap.put(map[0], map[1]);
+            parametersMap.put(
+                    map[0],
+                    URLDecoder.decode(map[1], "utf-8")
+            );
         }
 
         LOGGER.log(Level.INFO, "http请求中的查询字符串参数封装到映射集合 successfully");
