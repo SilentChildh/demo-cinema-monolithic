@@ -41,22 +41,23 @@ public class PageAbility {
 
     public PageAbility(Integer maxPageSize, Integer currentPageNumber) {
         this.maxPageSize = maxPageSize;
-        this.currentPageNumber = currentPageNumber;
+        this.setCurrentPageNumber(currentPageNumber);
     }
 
     public PageAbility(Integer maxPageSize, Integer currentPageNumber, Integer recordCount) {
         this.maxPageSize = maxPageSize;
-        this.currentPageNumber = currentPageNumber;
+        this.setCurrentPageNumber(currentPageNumber);
         this.recordCount = recordCount;
     }
 
     /**
      * 设置当前页码，用于跳转页面。<br/>
-     *
+     * <p/>
+     * 若输入的当前页码不为整数，那么默认为1
      * @param currentPageNumber 当前页码
      */
     public void setCurrentPageNumber(Integer currentPageNumber) {
-        this.currentPageNumber = currentPageNumber;
+        this.currentPageNumber = currentPageNumber > 0 ? currentPageNumber : 1;
     }
 
     /**
