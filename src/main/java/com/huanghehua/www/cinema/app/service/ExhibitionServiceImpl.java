@@ -53,7 +53,7 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
         LOGGER.log(Level.INFO, "{0} invoke show() method", Thread.currentThread());
         // 验证参数
         VerifyServiceMethodParam verifyServiceMethodParam = new VerifyServiceMethodParam(ExhibitionServiceImpl.class,
-                "show",
+                "showListPageInfo",
                 new Class<?>[]{String.class, PageAbility.class}, new Object[]{name, pageAbility});
         ParametersVerifyHandler.handle(verifyServiceMethodParam);
 
