@@ -37,7 +37,7 @@ public class FilmModel {
      */
     private LocalTime duration;
     /**
-     * 海报存储于数据库服务器的绝对路径
+     * 海报存储于数据库服务器的相对路径
      */
     private String poster;
     /**
