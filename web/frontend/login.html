@@ -38,12 +38,18 @@
                 })
                     .then(response => {
                         const commonResult = response.data;
-                        window.location.href = "/frontend/homepage.html?id=" + commonResult.data.id;
-                        alert(commonResult.tipMessage + "我在这success");
+                        if (commonResult.data.userId === undefined) {
+                            alert("登录失败...");
+                        }
+                        else {
+                            alert(commonResult.tipMessage);
+                            window.location.href = "/frontend/homepage.html?id=" + commonResult.data.userId;
+                        }
+
+
                     })
                     .catch(error => {
-                        alert(error)
-                        alert(response.data.tipMessage + "我在这fail");
+                        alert(error.response.data.tipMessage);
                     });
             }
         }
