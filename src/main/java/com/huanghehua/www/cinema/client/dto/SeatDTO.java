@@ -31,12 +31,21 @@ public class SeatDTO {
     /**
      * 座位状态，true为被占用，false未被占用
      */
-    private Boolean status;
+    private String status;
+
+    /**
+     * 用于标识当status为true时的状态
+     */
+    public static final String TRUE_STATUS = "占用";
+    /**
+     * 用于标识当status为true时的状态
+     */
+    public static final String FALSE_STATUS = "可用";
 
     public SeatDTO() {
     }
 
-    public SeatDTO(Long id, Long hallId, Integer row, Integer column, Boolean status) {
+    public SeatDTO(Long id, Long hallId, Integer row, Integer column, String status) {
         this.id = id;
         this.hallId = hallId;
         this.row = row;
@@ -104,11 +113,11 @@ public class SeatDTO {
         this.column = column;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
