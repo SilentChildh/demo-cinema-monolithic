@@ -22,6 +22,11 @@
         where name = #{name}
     </select>
 
+    <select id="getFilmById" resultType="com.huanghehua.www.cinema.infrastructure.data.FilmPO">
+        select * from film
+        where id = #{id}
+    </select>
+
     <insert id="insertFilm">
         insert into film
         (name, director, actor, releaseTime, duration, poster, status)

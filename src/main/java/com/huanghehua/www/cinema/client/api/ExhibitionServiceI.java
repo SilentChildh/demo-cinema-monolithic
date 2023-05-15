@@ -49,13 +49,6 @@ public interface ExhibitionServiceI {
      */
     CommonResult<?> addFilm(FilmAddCmd filmAddCmd);
 
-/*    *//**
-     * 更新电影
-     *
-     * @return {@link CommonResult}<{@link ?}>
-     *//*
-    CommonResult<?> updateFilm();*/
-
     /**
      * 删除电影
      *
@@ -63,6 +56,14 @@ public interface ExhibitionServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd);
+
+    /**
+     * 撤销删除电影
+     *
+     * @param filmUndoRemoveCmd 电影撤消删除cmd
+     * @return {@link CommonResult}<{@link ?}>
+     */
+    CommonResult<?> undoRemoveFilm(FilmUndoRemoveCmd filmUndoRemoveCmd);
 
     /**
      * 添加电影场次安排
@@ -112,4 +113,6 @@ public interface ExhibitionServiceI {
      * @return {@link CommonResult}<{@link ?}>
      */
     CommonResult<?> removeHall(Long hallId);
+
+
 }

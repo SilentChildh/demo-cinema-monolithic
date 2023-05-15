@@ -32,9 +32,8 @@ public class AdminController {
         return exhibitionService.removeFilm(filmRemoveCmd);
     }
     @Request(value = "/undo-remove-film", method = "post")
-    public CommonResult<?> undoRemoveFilm(FilmRemoveCmd filmRemoveCmd) {
-        // TODO 撤销下映
-        return exhibitionService.removeFilm(filmRemoveCmd);
+    public CommonResult<?> undoRemoveFilm(FilmUndoRemoveCmd filmUndoRemoveCmd) {
+        return exhibitionService.undoRemoveFilm(filmUndoRemoveCmd);
     }
 
     @Request(value = "/add-schedule", method = "post")

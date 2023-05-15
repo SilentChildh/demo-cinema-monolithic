@@ -52,6 +52,8 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     private SeatRemoveCmdExe seatRemoveCmdExe;
     @Reference
     private HallMapper hallMapper;
+    @Reference
+    private FilmUndoRemoveCmdExe filmUndoRemoveCmdExe;
 
     @Override
     public CommonResult<List<FilmDTO>> showListPageInfo(String name, PageAbility pageAbility) {
@@ -110,6 +112,11 @@ public class ExhibitionServiceImpl implements ExhibitionServiceI {
     @Override
     public CommonResult<?> removeFilm(FilmRemoveCmd filmRemoveCmd) {
         return filmRemoveCmdExe.execute(filmRemoveCmd);
+    }
+
+    @Override
+    public CommonResult<?> undoRemoveFilm(FilmUndoRemoveCmd filmUndoRemoveCmd) {
+        return filmUndoRemoveCmdExe.execute(filmUndoRemoveCmd);
     }
 
     @Override
