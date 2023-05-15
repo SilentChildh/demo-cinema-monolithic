@@ -54,6 +54,7 @@ public class DispatchServlet extends HttpServlet {
         /*Integer httpCode = dispatchResult.getHttpCode();
         response.setStatus(httpCode);*/
         // 响应请求
+        response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(JsonUtils.toJsonString(dispatchResult));
 
     }
