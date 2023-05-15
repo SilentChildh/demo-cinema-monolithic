@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderServiceI {
     }
 
     @Override
-    public CommonResult<?> showSchedule(Long filmId) {
+    public CommonResult<List<ScheduleDTO>> showSchedule(Long filmId) {
         List<SchedulePO> schedulePoList = scheduleMapper.listByFilmId(filmId);
 
         // 利用转换器转换为dto模型
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderServiceI {
     }
 
     @Override
-    public CommonResult<?> showActiveSeat(Long scheduleId) {
+    public CommonResult<List<SeatDTO>> showActiveSeat(Long scheduleId) {
         SchedulePO schedulePo = scheduleMapper.getScheduleById(scheduleId);
 
         // 获取影厅id，再获取座位表
