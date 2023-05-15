@@ -30,4 +30,14 @@
         select updateTime from `order`
         where id = #{id}
     </select>
+
+    <select id="getCreateTimeById" resultType="java.time.LocalDateTime">
+        select createTime from `order`
+        where id = #{id}
+    </select>
+
+    <select id="getStatusById" resultType="java.lang.Boolean">
+        select status from `order`
+        where id = #{id}
+    </select>
 </mapper>

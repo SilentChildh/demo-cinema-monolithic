@@ -67,4 +67,20 @@ public interface OrderMapper {
      * @return {@link LocalDateTime}
      */
     LocalDateTime getUpdateTimeById(@Param("id") Long id);
+
+    /**
+     * 通过订单id获取订单创建时间
+     *
+     * @param id id
+     * @return {@link LocalDateTime}
+     */
+    LocalDateTime getCreateTimeById(@Param("id") Long id);
+
+    /**
+     * 通过id获取订单状态
+     *
+     * @param id id
+     * @return {@link Boolean}
+     */
+    Boolean getStatusById(@Param("id") Long id);
 }
