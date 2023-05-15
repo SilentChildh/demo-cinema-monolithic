@@ -69,7 +69,7 @@
         `,
         data() {
             return {
-                name,
+                name : "",
                 httpCode: 200,
                 errorCode: "00000",
                 errorMessage: "",
@@ -77,7 +77,7 @@
                 commonResults: [
                     {
                         // 影片id
-                        id : "-",
+                        id: "-",
                         // 影片名称
                         name: '-',
                         // 导演
@@ -103,12 +103,13 @@
         methods: {
             select() {
                 axios.get('http://localhost:8080/api/exhibition/info', {
-                    params: {
-                        name: this.name,
-                        maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
+                        params: {
+                            "name": this.name,
+                            "maxPageSize": this.page.maxPageSize,
+                            "currentPageNumber": this.page.currentPageNumber,
+                        }
                     }
-                })
+                )
                     .then(response => {
                         this.commonResults = response.data.data;
 
@@ -165,7 +166,7 @@
                 commonResults: [
                     {
                         // 场次id
-                        id : "-",
+                        id: "-",
                         // 影片id
                         filmId: '-',
                         // 影厅id
@@ -249,7 +250,7 @@
                 commonResults: [
                     {
                         // 座位id
-                        id : "-",
+                        id: "-",
                         // 影厅id
                         hallId: '-',
                         // 行号
@@ -302,9 +303,9 @@
         data() {
             const urlSearchParams = new URLSearchParams(window.location.search);
             return {
-                userId : urlSearchParams.get("id"),
+                userId: urlSearchParams.get("id"),
                 scheduleId: "-",
-                seatId : "-",
+                seatId: "-",
                 httpCode: 200,
                 errorCode: "00000",
                 errorMessage: "",
@@ -360,39 +361,39 @@
         data() {
             return {
                 // 订单id
-                orderId : "-",
+                orderId: "-",
                 commonResults: [
                     {
                         // 影片id
-                        filmId : "-",
+                        filmId: "-",
                         // 影片名称
-                        filmName : "-",
+                        filmName: "-",
                         // 导演
-                        director : "-",
+                        director: "-",
                         // 主演
-                        actor : "-",
+                        actor: "-",
                         // 发布日期、时间
-                        releaseTime : "-",
+                        releaseTime: "-",
                         // 影片持续时间
-                        duration : "-",
+                        duration: "-",
                         // 海报存储于数据库服务器的绝对路径
-                        poster : "-",
+                        poster: "-",
 
 
                         // 影厅id
-                        hallId : "-",
+                        hallId: "-",
                         // 价格
-                        price : "-",
+                        price: "-",
                         // 影片场次开始时间
-                        startTime : "-",
+                        startTime: "-",
                         // 影片场次结束时间
-                        endTime : "-",
+                        endTime: "-",
 
 
                         // 行号
-                        row : "-",
+                        row: "-",
                         // 列号
-                        column : "-",
+                        column: "-",
                     },
                 ],
                 page: {
@@ -407,7 +408,7 @@
             flush() {
                 axios.get('http://localhost:8080/api/reservation/info', {
                     params: {
-                        orderId : this.orderId,
+                        orderId: this.orderId,
                         maxPageSize: this.page.maxPageSize,
                         currentPageNumber: this.page.currentPageNumber
                     }
