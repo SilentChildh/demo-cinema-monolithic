@@ -4,12 +4,17 @@ import com.huanghehua.www.cinema.app.service.ExhibitionServiceImpl;
 import com.huanghehua.www.cinema.app.service.OrderServiceImpl;
 import com.huanghehua.www.cinema.client.api.ExhibitionServiceI;
 import com.huanghehua.www.cinema.client.api.OrderServiceI;
+import com.huanghehua.www.cinema.client.dto.FilmDTO;
+import com.huanghehua.www.cinema.client.dto.ScheduleDTO;
+import com.huanghehua.www.cinema.client.dto.SeatDTO;
 import com.huanghehua.www.common.CommonResult;
 import com.huanghehua.www.dispatch.annotation.Request;
 import com.huanghehua.www.dispatch.annotation.RequestParam;
 import com.huanghehua.www.ioc.annotation.Bean;
 import com.huanghehua.www.ioc.annotation.Reference;
 import com.huanghehua.www.common.PageAbility;
+
+import java.util.List;
 
 /**
  * 电影控制器
@@ -38,9 +43,9 @@ public class ExhibitionController {
      * @return {@link CommonResult}<{@link ?}>
      */
     @Request(value = "/info", method = "get")
-    public CommonResult<?> showFilmInfo(@RequestParam("name") String name,
-                                        @RequestParam("maxPageSize") Integer maxPageSize,
-                                        @RequestParam("currentPageNumber") Integer currentPageNumber) {
+    public CommonResult<List<FilmDTO>> showFilmInfo(@RequestParam("name") String name,
+                                                     @RequestParam("maxPageSize") Integer maxPageSize,
+                                                     @RequestParam("currentPageNumber") Integer currentPageNumber) {
 
         PageAbility pageAbility = new PageAbility(maxPageSize, currentPageNumber);
 
@@ -54,7 +59,7 @@ public class ExhibitionController {
      * @return {@link CommonResult}<{@link ?}>
      */
     @Request(value = "/schedule", method = "get")
-    public CommonResult<?> showFilmSchedule(@RequestParam("filmId") Long filmId) {
+    public CommonResult<List<ScheduleDTO>> showFilmSchedule(@RequestParam("filmId") Long filmId) {
         return orderService.showSchedule(filmId);
     }
 
@@ -67,7 +72,7 @@ public class ExhibitionController {
      * @return {@link CommonResult}<{@link ?}>
      */
     @Request(value = "/seat", method = "get")
-    public CommonResult<?> showActiveSeat(@RequestParam("scheduleId") Long scheduleId) {
+    public CommonResult<List<SeatDTO>> showActiveSeat(@RequestParam("scheduleId") Long scheduleId) {
         return orderService.showActiveSeat(scheduleId);
     }
 
