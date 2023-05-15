@@ -2,6 +2,8 @@ package com.huanghehua.www.cinema.client.api;
 
 import com.huanghehua.www.cinema.client.dto.OrderDetailDTO;
 import com.huanghehua.www.cinema.client.dto.HistoryOrderDetailDTO;
+import com.huanghehua.www.cinema.client.dto.ScheduleDTO;
+import com.huanghehua.www.cinema.client.dto.SeatDTO;
 import com.huanghehua.www.cinema.client.dto.command.OrderAddCmd;
 import com.huanghehua.www.cinema.client.dto.command.OrderRemoveCmd;
 import com.huanghehua.www.cinema.client.dto.query.OrderDetailGetQry;
@@ -38,17 +40,17 @@ public interface OrderServiceI {
      * 根据电影id，显示场次
      *
      * @param filmId 影片id
-     * @return {@link CommonResult}<{@link ?}>
+     * @return {@link CommonResult}<{@link List}<{@link ScheduleDTO}>>
      */
-    CommonResult<?> showSchedule(Long filmId);
+    CommonResult<List<ScheduleDTO>> showSchedule(Long filmId);
 
     /**
      * 显示活跃座位
      *
      * @param scheduleId 场次id
-     * @return {@link CommonResult}<{@link ?}>
+     * @return {@link CommonResult}<{@link List}<{@link SeatDTO}>>
      */
-    CommonResult<?> showActiveSeat(Long scheduleId);
+    CommonResult<List<SeatDTO>> showActiveSeat(Long scheduleId);
 
     /**
      * 显示订单信息
