@@ -43,7 +43,8 @@
                         }
                         else {
                             alert(commonResult.tipMessage);
-                            window.location.href = "/frontend/homepage.html?id=" + commonResult.data.userId;
+                            window.location.href = "/frontend/homepage.html?id=" + commonResult.data.userId +
+                            "&jwt=" + commonResult.data.jwt;
                         }
 
 

@@ -100,11 +100,14 @@
         },
         methods: {
             flush() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/reservation/order-history', {
                     params: {
                         userId: this.userId,
                         maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
+                        currentPageNumber: this.page.currentPageNumber,
+                        jwt : urlSearchParams.get("jwt"),
+
                     }
                 })
                     .then(response => {
@@ -138,9 +141,11 @@
         },
         methods: {
             cancel() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/reservation/cancel', {
                     userId: this.userId,
                     orderId: this.orderId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
 
@@ -193,10 +198,12 @@
                 if (this.newPassword1 !== this.newPassword2) {
                     alert("两次输入的新密码不一致, 请检查是否输入正确...")
                 } else {
+                    const urlSearchParams = new URLSearchParams(window.location.search);
                     axios.post('http://localhost:8080/api/user/setting-password', {
                         userId: this.userId,
                         oldPassword: this.oldPassword,
                         newPassword: this.newPassword1,
+                        jwt : urlSearchParams.get("jwt"),
                     })
                         .then(response => {
                             this.commonResult = response.data.data;

@@ -28,7 +28,8 @@
         methods: {
             redirect() {
                 const urlSearchParams = new URLSearchParams(window.location.search);
-                window.location.href = "/frontend/personal.html?id=" + urlSearchParams.get("id");
+                window.location.href = "/frontend/personal.html?id=" + urlSearchParams.get("id")
+                + "&jwt=" + urlSearchParams.get("jwt");
             }
         }
     })
@@ -102,11 +103,13 @@
         },
         methods: {
             select() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/exhibition/info', {
                         params: {
                             "name": this.name,
                             "maxPageSize": this.page.maxPageSize,
                             "currentPageNumber": this.page.currentPageNumber,
+                            jwt : urlSearchParams.get("jwt"),
                         }
                     }
                 )
@@ -115,8 +118,8 @@
                         this.commonResults[0].poster = decodeURI(this.commonResults[0].poster)
                         alert(response.data.tipMessage)
                     })
-                    .catch(error => {
-                        alert(error.response.data.tipMessage)
+                    .catch((error, response) => {
+                        alert(error)
                     });
 
             }
@@ -189,11 +192,13 @@
         },
         methods: {
             select() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/exhibition/schedule', {
                     params: {
                         filmId: this.filmId,
                         maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
+                        currentPageNumber: this.page.currentPageNumber,
+                        jwt : urlSearchParams.get("jwt"),
                     }
                 })
                     .then(response => {
@@ -271,11 +276,13 @@
         },
         methods: {
             select() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/exhibition/seat', {
                     params: {
                         scheduleId: this.scheduleId,
                         maxPageSize: this.page.maxPageSize,
-                        currentPageNumber: this.page.currentPageNumber
+                        currentPageNumber: this.page.currentPageNumber,
+                        jwt : urlSearchParams.get("jwt"),
                     }
                 })
                     .then(response => {
@@ -314,10 +321,12 @@
         },
         methods: {
             order() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/reservation/order', {
                     userId: this.userId,
                     scheduleId: this.scheduleId,
                     seatId: this.seatId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         this.commonResults = response.data.data;
@@ -398,9 +407,11 @@
         },
         methods: {
             flush() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/reservation/info', {
                     params: {
                         orderId: this.orderId,
+                        jwt : urlSearchParams.get("jwt"),
                     }
                 })
                     .then(response => {

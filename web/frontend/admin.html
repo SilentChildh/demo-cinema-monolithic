@@ -86,6 +86,7 @@
         },
         methods: {
             add() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/add-film', {
                     name: this.addFilm.name,
                     director: this.addFilm.director,
@@ -93,6 +94,7 @@
                     releaseTime: this.addFilm.releaseTime,
                     duration: this.addFilm.duration,
                     poster: this.addFilm.poster,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -102,8 +104,10 @@
                     });
             },
             remove() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/remove-film', {
                     filmId : this.removeFilm.filmId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -113,8 +117,10 @@
                     });
             },
             undoRemove() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/undo-remove-film', {
                     filmId : this.undoRemoveFilm.filmId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -173,12 +179,14 @@
         },
         methods: {
             add() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/add-schedule', {
                     filmId: this.addSchedule.filmId,
                     hallId: this.addSchedule.hallId,
                     price: this.addSchedule.price,
                     startTime: this.addSchedule.startTime,
                     endTime: this.addSchedule.endTime,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -188,8 +196,10 @@
                     });
             },
             remove() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/remove-schedule', {
                     scheduleId : this.removeSchedule.scheduleId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -241,10 +251,12 @@
         },
         methods: {
             add() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/add-seat', {
                     hallId: this.addSeat.hallId,
                     row: this.addSeat.row,
                     column: this.addSeat.column,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -254,9 +266,11 @@
                     });
             },
             remove() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.post('http://localhost:8080/api/admin/remove-seat', {
                     hallId: this.removeSeat.hallId,
                     seatId : this.removeSeat.seatId,
+                    jwt : urlSearchParams.get("jwt"),
                 })
                     .then(response => {
                         alert(response.data.tipMessage)
@@ -303,9 +317,11 @@
         },
         methods: {
             add() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/admin/add-hall', {
                     params : {
                         capacity: this.addHall.capacity,
+                        jwt : urlSearchParams.get("jwt"),
                     }
                 })
                     .then(response => {
@@ -316,9 +332,11 @@
                     });
             },
             remove() {
+                const urlSearchParams = new URLSearchParams(window.location.search);
                 axios.get('http://localhost:8080/api/admin/remove-hall', {
                     params : {
                         hallId: this.removeHall.hallId,
+                        jwt : urlSearchParams.get("jwt"),
                     }
                 })
                     .then(response => {
