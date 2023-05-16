@@ -1,5 +1,6 @@
 package com.huanghehua.www.cinema.client.api;
 
+import com.huanghehua.www.cinema.client.dto.JwtSignatureDTO;
 import com.huanghehua.www.cinema.client.dto.command.UserLoginCmd;
 import com.huanghehua.www.common.CommonResult;
 
@@ -15,7 +16,7 @@ public interface AuthenticationServiceI {
      * @param userLoginCmd 用户登录cmd
      * @return {@link CommonResult}<{@link ?}>
      */
-    CommonResult<?> login(UserLoginCmd userLoginCmd);
+    CommonResult<JwtSignatureDTO> login(UserLoginCmd userLoginCmd);
     /**
      * 注册，返回一个含有用户信息的结果
      *

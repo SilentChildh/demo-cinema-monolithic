@@ -3,6 +3,9 @@ package com.huanghehua.www.cinema.app.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.huanghehua.www.cinema.client.dto.command.UserLoginCmd;
 import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
 import com.huanghehua.www.cinema.client.dto.JwtSignatureDTO;
@@ -20,6 +23,8 @@ import com.huanghehua.www.ioc.spi.aop.Interceptable;
 
 import java.time.Instant;
 import java.time.Period;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -36,13 +41,12 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
     private AuthenticationGateWay authenticationGateWay;
 
     @Override
-    public CommonResult<?> login(UserLoginCmd userLoginCmd) {
+    public CommonResult<JwtSignatureDTO> login(UserLoginCmd userLoginCmd) {
 
         String email = userLoginCmd.getEmail();
         String password = userLoginCmd.getPassword();
 
-        // 一天的间隔时间
-        final Period interval = Period.ofDays(1);
+
 
         // 执行登录业务，并获取用户id
         Long userId = authenticationGateWay.doLogin(email, password);
@@ -52,6 +56,17 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
             return CommonResult.operateFail("login fail! please retry...");
         }
 
+        // 生成token
+        String token = AuthenticationServiceImpl.createToken();
+
+        // JWT封装为DTO，并返回
+        JwtSignatureDTO jwtSignatureDTO = new JwtSignatureDTO(userId, token);
+        return CommonResult.operateSuccess(jwtSignatureDTO);
+
+    }
+    private static String createToken() {
+        // 一天的间隔时间
+        final Period interval = Period.ofDays(1);
         // 获取生效时间
         Instant now = Instant.now();
         // 获取JWT
@@ -62,15 +77,36 @@ public class AuthenticationServiceImpl implements AuthenticationServiceI {
                 .withAudience("user", "admin")
                 .withNotBefore(now)
                 .withIssuedAt(now);
-        String secretKey = "?????????????";
-        String jwt = builder.sign(Algorithm.HMAC256(secretKey));
 
-        // JWT封装为DTO，并返回
-        JwtSignatureDTO jwtSignatureDTO = new JwtSignatureDTO(userId, jwt);
-        return CommonResult.operateSuccess(jwtSignatureDTO);
-
+        return builder.sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
+    public static void main(String[] args) {
+        String token = createToken();
+        verifyJwt(token);
+        decodeJwt(token);
+    }
+
+    private static final String SECRET_KEY = "?????????????";
+    private static void verifyJwt(String token) {
+        try {
+            JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
+        } catch (JWTVerificationException e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "JWT验证失败", e);
+            throw e;
+        }
+    }
+
+    private static void decodeJwt(String token) {
+        try {
+            DecodedJWT decode = JWT.decode(token);
+            System.out.println(decode.getPayload());
+
+        } catch (JWTDecodeException e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "JWT解码失败", e);
+            throw e;
+        }
+    }
 
     @Override
     public CommonResult<?> register(@RegexPattern(".*@.*") String email,

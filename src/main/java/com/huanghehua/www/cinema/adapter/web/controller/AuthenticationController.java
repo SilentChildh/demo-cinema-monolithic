@@ -1,6 +1,7 @@
 package com.huanghehua.www.cinema.adapter.web.controller;
 
 
+import com.huanghehua.www.cinema.client.dto.JwtSignatureDTO;
 import com.huanghehua.www.cinema.client.dto.command.UserLoginCmd;
 import com.huanghehua.www.cinema.app.service.AuthenticationServiceImpl;
 import com.huanghehua.www.cinema.client.api.AuthenticationServiceI;
@@ -30,7 +31,7 @@ public class AuthenticationController {
      * @return {@link CommonResult}<{@link ?}>
      */
     @Request(value = "/login", method = "post")
-    public CommonResult<?> login(UserLoginCmd userLoginCmd) {
+    public CommonResult<JwtSignatureDTO> login(UserLoginCmd userLoginCmd) {
         return authenticationService.login(userLoginCmd);
     }
 
