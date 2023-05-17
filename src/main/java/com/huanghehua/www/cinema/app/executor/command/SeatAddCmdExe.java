@@ -3,7 +3,10 @@ package com.huanghehua.www.cinema.app.executor.command;
 import com.huanghehua.www.cinema.app.convertor.SeatConvertor;
 import com.huanghehua.www.cinema.app.executor.Executor;
 import com.huanghehua.www.cinema.client.dto.command.SeatAddCmd;
+import com.huanghehua.www.cinema.domain.gateway.SeatGateWay;
+import com.huanghehua.www.cinema.domain.seat.SeatModel;
 import com.huanghehua.www.cinema.infrastructure.data.SeatPO;
+import com.huanghehua.www.cinema.infrastructure.gatewayimpl.SeatGateWayImpl;
 import com.huanghehua.www.cinema.infrastructure.mapper.HallMapper;
 import com.huanghehua.www.cinema.infrastructure.mapper.SeatMapper;
 import com.huanghehua.www.common.CommonResult;
@@ -20,6 +23,8 @@ import com.huanghehua.www.ioc.spi.aop.Interceptable;
 @Bean
 @Interceptable
 public class SeatAddCmdExe implements Executor<SeatAddCmd> {
+    @Reference(SeatGateWayImpl.class)
+    private SeatGateWay seatGateWay;
     @Reference
     private SeatMapper seatMapper;
     @Reference
@@ -31,20 +36,20 @@ public class SeatAddCmdExe implements Executor<SeatAddCmd> {
         Integer row = seatAddCmd.getRow();
         Integer column = seatAddCmd.getColumn();
 
+        SeatModel seatModel = seatGateWay.getSeatModel(hallId, row, column);
+
         // 检查是否不为正数
-        if (row <= 0 || column <= 0) {
+        if (!seatModel.isPositive()) {
             return CommonResult.operateFail("座位号需要是正数");
         }
 
         // 检查是否存在该座位
-        Long countSeat = seatMapper.countSeat(hallId, row, column);
-        if (countSeat != 0) {
+        if (seatModel.isExistence()) {
             return CommonResult.operateFail("已存在该座位");
         }
 
-        Integer capacity = hallMapper.getCapacityById(hallId);
-        Long seats = seatMapper.countSeatByHallId(hallId);
-        if (capacity.compareTo(seats.intValue()) == 0) {
+        // 判断座位是否到达影厅的最大容量
+        if (seatModel.isMax()) {
             return CommonResult.operateFail("已到达影厅最大容纳量");
         }
 
