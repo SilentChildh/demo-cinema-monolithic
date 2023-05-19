@@ -40,12 +40,17 @@ public class UserPasswordUpdateCmdExe {
 
         // 对比旧密码是否一致
         String oldPasswordFromDb = userMapper.getPasswordById(userId);
-        if (!oldPasswordFromDb.equals(oldPassword)) {
-            return CommonResult.operateFail("旧密码错误，请重新尝试...");
+        int success = 0;
+
+        synchronized (UserPasswordUpdateCmdExe.class) {
+            if (!oldPasswordFromDb.equals(oldPassword)) {
+                return CommonResult.operateFail("旧密码错误，请重新尝试...");
+            }
+
+            // 进行密码修改
+            success = userMapper.updatePasswordById(userId, newPassword);
         }
 
-        // 进行密码修改
-        int success = userMapper.updatePasswordById(userId, newPassword);
         // 返回成功结果
         return success > 0 ?
                 CommonResult.operateSuccess(new UserDTO(email, newPassword)) :

@@ -32,32 +32,35 @@ public class SeatAddCmdExe implements Executor<SeatAddCmd> {
 
     @Override
     public CommonResult<?> execute(SeatAddCmd seatAddCmd) {
-        Long hallId = seatAddCmd.getHallId();
+        Long hallId = seatAddCmd.getHallId();   
         Integer row = seatAddCmd.getRow();
         Integer column = seatAddCmd.getColumn();
 
         SeatModel seatModel = seatGateWay.getSeatModel(hallId, row, column);
+        int success = 0;
 
-        // 检查是否不为正数
-        if (!seatModel.isPositive()) {
-            return CommonResult.operateFail("座位号需要是正数");
+        synchronized (SeatAddCmdExe.class) {
+            // 检查是否不为正数
+            if (!seatModel.isPositive()) {
+                return CommonResult.operateFail("座位号需要是正数");
+            }
+
+            // 检查是否存在该座位
+            if (seatModel.isExistence()) {
+                return CommonResult.operateFail("已存在该座位");
+            }
+
+            // 判断座位是否到达影厅的最大容量
+            if (seatModel.isMax()) {
+                return CommonResult.operateFail("已到达影厅最大容纳量");
+            }
+
+            // 转换为持久化模型
+            SeatPO seatPo = SeatConvertor.dtoToPo(seatAddCmd);
+
+            // 执行添加操作
+           success = seatMapper.insertSeat(seatPo);
         }
-
-        // 检查是否存在该座位
-        if (seatModel.isExistence()) {
-            return CommonResult.operateFail("已存在该座位");
-        }
-
-        // 判断座位是否到达影厅的最大容量
-        if (seatModel.isMax()) {
-            return CommonResult.operateFail("已到达影厅最大容纳量");
-        }
-
-        // 转换为持久化模型
-        SeatPO seatPo = SeatConvertor.dtoToPo(seatAddCmd);
-
-        // 执行添加操作
-        int success = seatMapper.insertSeat(seatPo);
 
         return success > 0 ? CommonResult.operateSuccess() : CommonResult.operateFail("添加座位失败...");
     }

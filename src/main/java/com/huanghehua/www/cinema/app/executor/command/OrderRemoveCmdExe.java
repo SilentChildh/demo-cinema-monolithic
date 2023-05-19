@@ -30,8 +30,6 @@ public class OrderRemoveCmdExe {
     private OrderMapper orderMapper;
 
     /**
-     * 根据订单id执行取消订单操作
-     *
      * @param orderRemoveCmd 订单删除cmd
      * @return {@link CommonResult}<{@link ?}>
      */
@@ -39,23 +37,26 @@ public class OrderRemoveCmdExe {
 
         Long orderId = orderRemoveCmd.getOrderId();
 
-        // 检查订单有效状态
-        Boolean status = orderMapper.getStatusById(orderId);
-        if (!status) {
-            return CommonResult.operateFail("不存在该订单");
+        synchronized (OrderRemoveCmdExe.class) {
+            // 检查订单有效状态
+            Boolean status = orderMapper.getStatusById(orderId);
+            if (!status) {
+                return CommonResult.operateFail("不存在该订单");
+            }
+
+            // 检查是否超时
+            LocalDateTime createTime = orderMapper.getCreateTimeById(orderId);
+            // 三十分钟的时限
+            final int timeOut = 30;
+            // 若超时则不可取消
+            if (createTime.plus(timeOut, ChronoUnit.MINUTES).isBefore(LocalDateTime.now())) {
+                return CommonResult.operateFail("已超三十分钟，不可取消订单...");
+            }
+
+            // 执行取消订单操作
+            orderGateWay.removeOrder(orderId);
         }
 
-        // 检查是否超时
-        LocalDateTime createTime = orderMapper.getCreateTimeById(orderId);
-        // 三十分钟的时限
-        final int timeOut = 30;
-        // 若超时则不可取消
-        if (createTime.plus(timeOut, ChronoUnit.MINUTES).isBefore(LocalDateTime.now())) {
-            return CommonResult.operateFail("已超三十分钟，不可取消订单...");
-        }
-
-        // 执行取消订单操作
-        orderGateWay.removeOrder(orderId);
         return CommonResult.operateSuccess();
     }
 }
