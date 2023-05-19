@@ -1,7 +1,7 @@
 package com.huanghehua.www.rpc.handler.server;
 
 import com.alibaba.fastjson.JSON;
-import com.huanghehua.rpc.data.RemoteRequestDTO;
+import com.huanghehua.www.rpc.data.RemoteRequestDTO;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
